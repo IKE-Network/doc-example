@@ -1,0 +1,286 @@
+== Rendering Strategy
+
+The pipeline produces HTML and PDF from the same AsciiDoc source.
+HTML generation uses the built-in `html5` backend.
+PDF generation supports six independent renderers,
+each with different trade-offs in quality,
+licensing,
+and diagram handling.
+
+=== Pipeline Overview
+
+[plantuml]
+....
+@startuml
+skinparam defaultFontName Noto Sans
+left to right direction
+
+rectangle "AsciiDoc\nsource" as SRC
+
+package "Intermediate Forms" {
+  rectangle "HTML5" as HTML5
+  rectangle "DocBook5 XML" as DB
+  rectangle "XSL-FO" as FO
+}
+
+package "PDF Outputs" {
+  rectangle "Prawn PDF\n//pdf-prawn//" as PRAWN #fbb
+  rectangle "Prince PDF\n//pdf-prince//" as PRINCE #bbf
+  rectangle "AH PDF\n//pdf-ah//" as AH #bbf
+  rectangle "WeasyPrint PDF\n//pdf-weasyprint//" as WP #bbf
+  rectangle "FOP PDF\n//pdf-fop//" as FOP #bbf
+  rectangle "XEP PDF\n//pdf-xep//" as XEP #bbf
+}
+
+SRC --> PRAWN : asciidoctorj-pdf\n(JRuby/Prawn)
+SRC --> HTML5
+SRC --> DB
+
+HTML5 --> PRINCE : prince
+HTML5 --> AH : AHFCmd -cssmode
+HTML5 --> WP : weasyprint
+
+DB --> FO : Saxon-HE\n+ DocBook XSL
+FO --> FOP : Apache FOP
+FO --> XEP : xep
+@enduml
+....
+
+=== Renderer Comparison
+
+[cols="1,2,1,1,1,1,1"]
+|===
+| Renderer | Pipeline | Diagrams | Koncept Badges | Glossary | License | PDF/UA
+
+| *WeasyPrint*
+| AsciiDoc -> HTML -> PDF
+| PNG
+| SVG badges
+| Yes
+| Free (BSD)
+| No
+
+| Prince XML
+| AsciiDoc -> HTML -> PDF
+| SVG
+| SVG badges
+| Yes
+| $495+ per seat
+| Yes
+
+| Antenna House
+| AsciiDoc -> HTML -> PDF
+| SVG
+| SVG badges
+| Yes
+| $400+ (CSS Lite)
+| Yes
+
+| Apache FOP
+| AsciiDoc -> DocBook -> FO -> PDF
+| SVG
+| Styled text
+| Yes
+| Free (Apache 2.0)
+| No
+
+| RenderX XEP
+| AsciiDoc -> DocBook -> FO -> PDF
+| SVG
+| Styled text
+| Yes
+| Free personal
+| No
+
+| Prawn
+| AsciiDoc -> PDF (JRuby)
+| PNG
+| Plain text
+| *No*
+| Free (Apache 2.0)
+| No
+|===
+
+NOTE: *Apache FOP is the recommended free PDF renderer.* It is pure Java (resolved from Maven Central), requires no external binary install, and gets full Koncept styled text rendering and auto-generated glossary via the DocBook/XSL-FO pipeline. Prawn is useful as a zero-dependency preview but cannot generate the glossary due to an architectural limitation in asciidoctorj-pdf (see <<prawn-limitations>>).
+
+=== Apache FOP (Recommended Free)
+
+The recommended free PDF renderer.
+Apache FOP is a pure-Java XSL-FO processor (Apache License 2.0)
+that slots into the DocBook -> XSL-FO -> PDF pipeline.
+FOP is resolved from Maven Central as a plugin dependency —
+no local binary install,
+no Python,
+no external tools beyond Node.js (for svgo).
+
+The pipeline is the same as XEP:
+AsciiDoc -> DocBook5 -> XSL-FO -> PDF.
+Koncept badges render as styled text (`K[Label]`) via `ike-fo.xsl`,
+and the auto-generated glossary is included as a native DocBook
+`<glossary>` element.
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.fop
+----
+
+=== WeasyPrint (Alternative Free — CSS Path)
+
+A free alternative using the HTML -> CSS Paged Media pipeline.
+Requires Python 3.8+ (`pip install weasyprint`).
+WeasyPrint produces full Koncept SVG badges and auto-generated
+glossary output.
+
+WeasyPrint cannot render `<foreignObject>` in SVGs,
+so diagrams use PNG format (rasterized server-side by Kroki).
+This is the same approach as Prawn and produces clear,
+legible diagrams.
+
+Limitations vs Prince/AH:
+
+* No `target-counter()` for TOC page numbers
+* No PDF/UA tagged output
+* Requires Python and system libraries
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.weasyprint
+----
+
+=== Prince XML
+
+Prince has a full CSS engine with CSS Paged Media support.
+The pipeline generates print-ready HTML (inline TOC,
+`<object>` SVG references),
+then runs `svgo` to convert `<foreignObject>` to `<text>` in the SVG files,
+then invokes Prince.
+
+Prince supports `PDF/UA-1` for accessible output.
+The `--pdf-profile=PDF/UA-1` flag is enabled by default.
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.prince
+----
+
+=== Antenna House Formatter
+
+AH Formatter supports both XSL-FO and CSS Paged Media engines.
+The pipeline uses CSS mode (`-cssmode`) for consistency with
+the Prince profile.
+Like Prince,
+it supports `PDF/UA-1`.
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.ah
+----
+
+[[prawn-limitations]]
+=== Prawn (Preview Quality)
+
+The simplest pipeline.
+The `asciidoctorj-pdf` library renders AsciiDoc directly to PDF
+using JRuby and the Prawn PDF library.
+No external tools required.
+
+[WARNING]
+====
+Prawn has two permanent limitations affecting Koncept support:
+
+* *No glossary* -- The asciidoctorj-pdf backend returns a Ruby PDF object (not a String) from its converter, which means Java Postprocessors cannot intercept the output. This is an architectural limitation present since 2014 with no path to resolution.
+* *Plain text Koncept rendering* -- Prawn's HTML parser only supports basic inline elements. SVG badges are not supported. Koncepts render as bold blue *K* followed by the label in code font.
+
+For full Koncept support (SVG badges + glossary),
+use WeasyPrint instead.
+====
+
+==== Font-lookup warnings on source blocks
+
+Prawn emits a spurious warning for every document that contains
+a listing or source block:
+
+----
+asciidoctor: WARN: Could not locate the character `\n` (\u000a)
+  in the following fonts: NotoSansMono, NotoSansMath, ...
+----
+
+The root cause is in asciidoctor-pdf's preformatted-text renderer:
+when it lays out a code block,
+literal newline characters inside the text run are passed to
+Prawn's font glyph-lookup instead of being consumed as
+line-break control characters.
+The warning is cosmetic --
+the PDF renders correctly --
+but it cannot be suppressed or fixed without patching the Ruby gem.
+Switching source highlighters (CodeRay,
+Rouge, or none) and switching diagram formats (SVG vs PNG) have no effect;
+the warning fires for any multi-line listing block.
+
+This issue does not affect any other renderer.
+Prince, WeasyPrint,
+AH, FOP,
+and XEP all handle source blocks through their native text
+layout engines without font-lookup warnings.
+
+Diagrams are rendered as PNG because `prawn-svg` cannot handle
+`<foreignObject>` elements,
+CSS `<style>` blocks,
+or HSL color values.
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.prawn
+----
+
+=== RenderX XEP
+
+The only pipeline that goes through DocBook and XSL-FO rather than HTML.
+This is a fundamentally different rendering path:
+
+. AsciiDoc -> DocBook5 XML (asciidoctor `docbook5` backend)
+. DocBook5 -> XSL-FO (Saxon-HE + DocBook XSL + IKE customization layer)
+. XSL-FO -> PDF (RenderX XEP)
+
+All dependencies are Maven-managed.
+Saxon-HE resolves from Maven Central.
+DocBook XSL is unpacked from the `docbook-xsl` artifact.
+Only the XEP binary itself requires local installation (free
+personal license from renderx.com).
+
+Intermediate outputs are preserved for debugging:
+
+* `target/generated-docs/docbook/index.xml` -- DocBook5
+* `target/generated-docs/fo/index.fo` -- XSL-FO
+* `target/generated-docs/pdf-xep/index.pdf` -- final PDF
+
+[source,bash]
+----
+mvn clean verify -pl example-project -Dike.pdf.xep
+----
+
+=== The foreignObject Problem
+
+****
+Mermaid renders diagram labels inside `<foreignObject>`
+elements in SVG.
+This is an HTML-in-SVG escape hatch that works in browsers but
+fails in most PDF renderers:
+
+* *Prawn*: `prawn-svg` silently drops `<foreignObject>` -- labels vanish
+* *Prince*: Does not render `<foreignObject>` inside `<object>`-referenced SVGs
+* *AH Formatter*: May not render `<foreignObject>` in SVGs
+* *FOP*: No `<foreignObject>` support
+* *XEP*: No `<foreignObject>` support
+
+PlantUML and GraphViz do not use `<foreignObject>` --
+they render labels as native SVG `<text>` elements with hex colors.
+These pass through all renderers without modification.
+
+The `svgo-xep.config.mjs` plugin converts `<foreignObject>` to
+`<text>` and HSL to hex colors,
+making Mermaid SVGs compatible with Prince,
+AH, FOP,
+and XEP. For Prawn and WeasyPrint,
+the simpler solution is PNG.
+****

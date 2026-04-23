@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  IKE Community — Documentation Example
+  ══════════════════════════════════════
+
+  A standalone doc-only project that inherits from ike-parent
+  (released to Nexus). Serves as:
+    1. Proof that ike-doc packaging works as an external consumer
+    2. Comprehensive renderer/pipeline test vehicle
+    3. Template for new documentation projects
+
+  Build:
+    mvn clean verify                       # HTML only
+    mvn clean verify -Dike.pdf.prawn       # HTML + Prawn PDF
+    mvn clean verify -Dike.pdf.fop         # HTML + FOP PDF
+-->
+<project xmlns="http://maven.apache.org/POM/4.1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0
+         http://maven.apache.org/xsd/maven-4.1.0.xsd"
+         root="true">
+    <modelVersion>4.1.0</modelVersion>
+
+    <parent>
+        <groupId>network.ike.platform</groupId>
+        <artifactId>ike-parent</artifactId>
+        <version>1</version>
+    </parent>
+
+    <groupId>network.ike.examples</groupId>
+    <artifactId>doc-example</artifactId>
+    <version>1-SNAPSHOT</version>
+    <!-- ike-doc packaging: provided by ike-doc-maven-plugin (from
+         ike-docs) through extensions=true in ike-parent. -->
+    <packaging>ike-doc</packaging>
+
+    <name>IKE Documentation Example</name>
+    <description>
+        Documentation-only project demonstrating the IKE AsciiDoc pipeline.
+        Exercises all diagram types, Koncept macros, typography, and layout
+        features across all 6 PDF renderers.
+    </description>
+    <url>https://github.com/IKE-Network/doc-example</url>
+    <inceptionYear>2026</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>IKE Community</name>
+        <url>https://ike.network</url>
+    </organization>
+
+    <distributionManagement>
+        <site>
+            <id>ike-site</id>
+            <url>scpexe://proxy/srv/ike-site/examples/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
+        <!-- IKE Build Standards — Claude instruction files.
+             Version managed by ike-parent.
+             scope=provided: not needed at runtime, only unpacked at validate. -->
+        <dependency>
+            <groupId>network.ike.tooling</groupId>
+            <artifactId>ike-build-standards</artifactId>
+            <classifier>claude</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- IKE Build Standards — shared build config (checkstyle, PMD, etc.).
+             Unpacked to target/build-standards/ by inherited execution. -->
+        <dependency>
+            <groupId>network.ike.tooling</groupId>
+            <artifactId>ike-build-standards</artifactId>
+            <classifier>config</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- IKE Documentation Resources — themes, assembly descriptors, configs.
+             Unpacked to target/ike-doc-resources/ by inherited execution. -->
+        <dependency>
+            <groupId>network.ike.docs</groupId>
+            <artifactId>ike-doc-resources</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- DocBook XSL — stylesheets for XEP/FOP DocBook→XSL-FO→PDF pipeline. -->
+        <dependency>
+            <groupId>network.ike.docs</groupId>
+            <artifactId>docbook-xsl</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Fonts for PDF generation (minimal subset - 13 TTFs, ~4MB) -->
+        <dependency>
+            <groupId>network.ike.docs</groupId>
+            <artifactId>minimal-fonts</artifactId>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,219 @@
+=== Supported Diagram Types
+
+The IKE AsciiDoc pipeline supports PlantUML and GraphViz diagrams,
+all rendered to SVG at build time via the Kroki server.
+
+==== PlantUML Diagrams
+
+PlantUML is the preferred diagram engine for IKE documentation.
+It covers the widest range of diagram types with reliable SVG
+output across all renderers.
+
+**PlantUML Sequence Diagram:**
+
+[plantuml]
+....
+@startuml
+participant Client
+participant API
+participant Reasoner
+participant Database
+
+Client -> API: Query concept
+API -> Database: Fetch concept data
+Database --> API: Concept + relationships
+API -> Reasoner: Classify concept
+Reasoner -> Reasoner: Apply DL rules
+Reasoner --> API: Inferred relationships
+API --> Client: Complete concept
+@enduml
+....
+
+**PlantUML State Diagram:**
+
+[plantuml]
+....
+@startuml
+[*] --> Draft
+Draft : Creating concept
+Draft --> Review : Submit
+
+Review : Under review
+Review --> Approved : Accept
+Review --> Draft : Reject
+
+Approved : Ready for release
+Approved --> Published : Release
+
+Published : In production
+Published --> Retired : Deprecate
+
+Retired : No longer active
+Retired --> [*]
+@enduml
+....
+
+**PlantUML Class Diagram:**
+
+[plantuml]
+....
+@startuml
+
+class Concept {
+  - conceptId: long
+  - fullySpecifiedName: String
+  - preferredTerm: String
+  - definition: String
+  + isPrimitive(): boolean
+  + {static} clinicalFinding(): Concept
+}
+
+class Relationship {
+  - sourceId: long
+  - typeId: long
+  - destinationId: long
+  - relationshipGroup: int
+}
+
+class Description {
+  - descriptionId: long
+  - conceptId: long
+  - term: String
+  - languageCode: String
+  - typeId: long
+}
+
+Concept "1" *-- "0..*" Relationship: has
+Concept "1" *-- "1..*" Description: has
+
+note right of Concept
+  Immutable record representing
+  a SNOMED CT concept
+end note
+
+note bottom of Relationship
+  Defines semantic relationships
+  between concepts (is-a, part-of, etc.)
+end note
+@enduml
+....
+
+**PlantUML Entity-Relationship Diagram:**
+
+[plantuml]
+....
+@startuml
+!pragma layout smetana
+
+entity CONCEPT {
+  * conceptId : long <<PK>>
+  --
+  * effectiveTime : timestamp
+  * active : boolean
+  * moduleId : long
+  * definitionStatusId : long
+}
+
+entity RELATIONSHIP {
+  * relationshipId : long <<PK>>
+  --
+  * sourceId : long <<FK>>
+  * destinationId : long <<FK>>
+  * typeId : long <<FK>>
+  * relationshipGroup : int
+  * characteristicTypeId : long
+}
+
+entity DESCRIPTION {
+  * descriptionId : long <<PK>>
+  --
+  * conceptId : long <<FK>>
+  * term : string
+  * languageCode : string
+  * typeId : long <<FK>>
+  * active : boolean
+}
+
+entity REFSET_MEMBER {
+  * memberId : uuid <<PK>>
+  --
+  * refsetId : long <<FK>>
+  * referencedComponentId : long <<FK>>
+  * active : boolean
+}
+
+CONCEPT ||--o{ RELATIONSHIP : has
+CONCEPT ||--o{ DESCRIPTION : has
+CONCEPT ||--o{ REFSET_MEMBER : "member of"
+@enduml
+....
+
+==== GraphViz Diagrams
+
+GraphViz excels at complex graph structures where layout
+precision matters,
+including dependency graphs,
+subsumption hierarchies,
+and large node-count diagrams:
+
+[graphviz]
+....
+digraph ConceptHierarchy {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+    
+    SNOMEDCT [label="SNOMED CT Root", fillcolor="#e1f5ff", style="rounded,filled"];
+    
+    ClinicalFinding [label="Clinical Finding", fillcolor="#fff4e1", style="rounded,filled"];
+    Procedure [label="Procedure", fillcolor="#fff4e1", style="rounded,filled"];
+    Observable [label="Observable Entity", fillcolor="#fff4e1", style="rounded,filled"];
+    
+    Disease [label="Disease", fillcolor="#ffe6cc", style="rounded,filled"];
+    Symptom [label="Symptom", fillcolor="#ffe6cc", style="rounded,filled"];
+    
+    Diabetes [label="Diabetes mellitus\n(73211009)", fillcolor="#ffcccc", style="rounded,filled"];
+    Type1DM [label="Type 1 diabetes\n(46635009)", fillcolor="#ffcccc", style="rounded,filled"];
+    Type2DM [label="Type 2 diabetes\n(44054006)", fillcolor="#ffcccc", style="rounded,filled"];
+    
+    SNOMEDCT -> ClinicalFinding [label="is-a"];
+    SNOMEDCT -> Procedure [label="is-a"];
+    SNOMEDCT -> Observable [label="is-a"];
+    
+    ClinicalFinding -> Disease [label="is-a"];
+    ClinicalFinding -> Symptom [label="is-a"];
+    
+    Disease -> Diabetes [label="is-a"];
+    Diabetes -> Type1DM [label="is-a"];
+    Diabetes -> Type2DM [label="is-a"];
+}
+....
+
+==== Custom Diagram Extension Points
+
+For specialized diagrams (e.g.,
+DL axiom visualizations),
+you can:
+
+1. Create a custom diagram generator (Java, Python, etc.)
+2. Output SVG to a file
+3. Include via standard image syntax:
+
+[source,asciidoc]
+----
+image::diagrams/custom-axiom-diagram.svg[Custom DL Axiom]
+----
+
+Or integrate with asciidoctorj-diagram as a custom diagram type
+(requires Ruby extension).
+
+=== Diagram Best Practices
+
+Consistent Styling:: Use color schemes that work in both light and dark modes
+
+SVG Output:: Always prefer SVG for scalability and quality
+
+Build-Time Generation:: Render at build time for deterministic output
+
+Alt Text:: Provide descriptive alt text for accessibility
+
+Version Control:: Source diagrams (`.puml`, `.dot`) should be version controlled

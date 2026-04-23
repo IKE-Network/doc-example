@@ -1,0 +1,260 @@
+== Build Profiles
+
+The documentation pipeline uses a **property-driven build** pattern.
+All build logic lives in the main `<build>` section of
+`ike-parent/pom.xml`,
+with per-renderer skip flags that default to `true`.
+Profiles are thin toggles that flip their skip flag to `false`.
+This makes profiles discoverable in IntelliJ's Maven Profiles
+panel and composable via `-D` properties or `-P` flags.
+
+=== Profile Activation
+
+[cols="2,2,2"]
+|===
+| Profile | Activation Property | Output Directory
+
+| `html`
+| Active by default
+| `target/generated-docs/html/`
+
+| `pdf` (Prawn)
+| `-Dike.pdf.prawn`
+| `target/generated-docs/pdf-prawn/`
+
+| `pdf-prince`
+| `-Dike.pdf.prince`
+| `target/generated-docs/pdf-prince/`
+
+| `pdf-ah`
+| `-Dike.pdf.ah`
+| `target/generated-docs/pdf-ah/`
+
+| `pdf-weasyprint`
+| `-Dike.pdf.weasyprint`
+| `target/generated-docs/pdf-weasyprint/`
+
+| `pdf-fop`
+| `-Dike.pdf.fop`
+| `target/generated-docs/pdf-fop/`
+
+| `pdf-xep`
+| `-Dike.pdf.xep`
+| `target/generated-docs/pdf-xep/`
+
+| `pdf-default`
+| `-Dike.pdf.default=RENDERER`
+| `target/generated-docs/pdf/` (copy)
+|===
+
+TIP: Profiles are composable. Activate multiple renderers in a single build by passing multiple properties: `mvn clean verify -Dike.pdf.prawn -Dike.pdf.fop -Dike.pdf.xep`. The `html` profile is active by default and does not need to be specified.
+
+=== Skip Properties
+
+Each renderer has a skip flag that defaults to `true` (disabled).
+Profiles flip the relevant flag to `false`.
+You can also override skip flags directly from the command line.
+
+[cols="3,2,3"]
+|===
+| Property | Default | Controls
+
+| `ike.skip.html`
+| `true`
+| HTML5 generation + ZIP
+
+| `ike.skip.prawn`
+| `true`
+| Prawn PDF generation + ZIP
+
+| `ike.skip.prince`
+| `true`
+| Prince XML pipeline + ZIP
+
+| `ike.skip.ah`
+| `true`
+| Antenna House pipeline + ZIP
+
+| `ike.skip.weasyprint`
+| `true`
+| WeasyPrint pipeline + ZIP
+
+| `ike.skip.xep`
+| `true`
+| XEP pipeline + ZIP
+
+| `ike.skip.fop`
+| `true`
+| FOP pipeline + ZIP
+
+| `ike.skip.pdf-default`
+| `true`
+| Default PDF copy + ZIP
+
+| `ike.skip.docbook`
+| `true`
+| DocBook XSL unpack (shared by XEP and FOP)
+|===
+
+Override skip flags directly:
+
+[source,bash]
+----
+# Enable HTML + Prawn without using profiles
+mvn clean verify -Dike.skip.html=false -Dike.skip.prawn=false
+----
+
+=== ZIP Artifacts
+
+Each renderer creates a ZIP of its output directory and
+attaches it as a classified Maven artifact.
+This makes documentation output publishable to Maven repositories.
+
+[cols="2,3"]
+|===
+| Classifier | Artifact
+
+| `html` | `__artifactId__-__version__-html.zip`
+| `prawn` | `__artifactId__-__version__-prawn.zip`
+| `fop` | `__artifactId__-__version__-fop.zip`
+| `xep` | `__artifactId__-__version__-xep.zip`
+| `prince` | `__artifactId__-__version__-prince.zip`
+| `ah` | `__artifactId__-__version__-ah.zip`
+| `weasyprint` | `__artifactId__-__version__-weasyprint.zip`
+| `pdf` | `__artifactId__-__version__-pdf.zip` (default copy)
+|===
+
+=== Key Overridable Properties
+
+[cols="3,3,3"]
+|===
+| Property | Default | Purpose
+
+| `kroki.server.url`
+| `https://kroki.komet.sh`
+| Kroki diagram rendering server
+
+| `pdf.source.document`
+| `index`
+| Master document name (without extension)
+
+| `prince.executable`
+| `prince`
+| Path to Prince XML binary
+
+| `antennahouse.executable`
+| `AHFCmd`
+| Path to AH Formatter binary
+
+| `weasyprint.executable`
+| `weasyprint`
+| Path to WeasyPrint binary
+
+| `xep.executable`
+| `xep`
+| Path to RenderX XEP binary
+
+| `ike.extensions.directory`
+| `../ike-parent/src/extensions`
+| Ruby extension directory
+
+| `ike.shared.asciidoc.directory`
+| `../ike-parent/src/shared-asciidoc`
+| Shared docinfo directory
+
+| `pdf.print.stylesheet`
+| `../ike-parent/src/theme/ike-print.css`
+| CSS Paged Media stylesheet
+|===
+
+Override any property on the command line:
+
+[source,bash]
+----
+mvn verify -Dkroki.server.url=http://localhost:8000 \
+           -Dprince.executable=/opt/prince/bin/prince
+----
+
+=== Maven Build Commands
+
+The reactor build is invoked directly with Maven,
+using `-D` properties to select PDF renderers:
+
+[source,bash]
+----
+mvn clean verify                       # HTML only (default)
+mvn clean verify -Dike.pdf.prawn       # Prawn PDF
+mvn clean verify -Dike.pdf.fop         # DocBook -> XSL-FO -> FOP (free)
+mvn clean verify -Dike.pdf.xep         # DocBook -> XSL-FO -> XEP
+mvn clean verify -Dike.pdf.prince      # HTML -> Prince XML -> PDF
+mvn clean verify -Dike.pdf.ah          # HTML -> AH Formatter -> PDF
+mvn clean verify -Dike.pdf.weasyprint  # HTML -> WeasyPrint -> PDF
+----
+
+The Maven reactor:
+
+. Validates prerequisites (Maven, Java, renderer binaries)
+. Builds infrastructure modules first (sorted by dependency graph)
+. Builds doc projects with the selected renderer
+. For Prawn: runs svgo to inline CSS in SVGs, then rebuilds
+
+=== Build Lifecycle
+
+The following diagram shows when each plugin runs during the
+Maven lifecycle:
+
+[plantuml]
+....
+@startuml
+|generate-sources|
+:maven-dependency-plugin
+unpack-doc-dependencies;
+note right: Unpack cross-module\nAsciiDoc ZIPs
+
+|generate-resources|
+:maven-dependency-plugin
+unpack-fonts;
+note right: Unpack Noto TTFs\nfrom minimal-fonts
+
+|prepare-package|
+:maven-antrun-plugin
+prepare-print-assets;
+note right: Copy CSS + fonts\nto pdf-html directory
+
+:asciidoctor-maven-plugin
+generate print HTML / DocBook;
+note right: HTML for Prince/AH/WP\nDocBook for XEP/FOP
+
+:exec-maven-plugin
+svgo fix SVGs;
+note right: foreignObject -> text\n(Prince/AH/FOP/XEP only)
+
+|package|
+:xml-maven-plugin
+DocBook -> XSL-FO;
+note right: Saxon-HE + DocBook XSL\n(FOP/XEP only)
+
+:exec-maven-plugin
+render PDF;
+note right: Prince / AH / WP / FOP / XEP
+
+:maven-assembly-plugin
+zip + attach (package-phase);
+note right: Classified ZIP artifacts\n(prince/ah/wp/fop/xep)
+
+|verify|
+:asciidoctor-maven-plugin
+generate HTML + Prawn PDF;
+note right: HTML5 backend (always)\nPrawn backend (if activated)
+
+:maven-antrun-plugin
+copy-default-pdf;
+note right: pdf-RENDERER/ -> pdf/\n(if ike.pdf.default set)
+
+:maven-assembly-plugin
+zip + attach (verify-phase);
+note right: Classified ZIP artifacts\n(html/prawn/pdf-default)
+@enduml
+....
+
+NOTE: All renderer executions are declared in the main `<build>` section with per-renderer `<skip>` flags that default to `true`. Profiles are thin toggles that set `ike.skip.RENDERER=false`. The `pom-skip-renderers` profile (activated by `<packaging>pom</packaging>`) forces external renderer skip flags back to `true` for POM-packaging modules like `ike-parent`, even when renderer profiles are active. HTML and Prawn are left alone since asciidoctor-maven-plugin handles missing sources gracefully.

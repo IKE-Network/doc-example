@@ -1,0 +1,143 @@
+=== Concept Design
+
+The `Concept` record embodies key principles from SNOMED CT:
+
+==== Immutability
+
+Records provide immutable data structures,
+ensuring Koncepts cannot be modified after creation:
+
+[source,java]
+----
+// Once created, this Koncept cannot be changed
+Concept diabetes = new Concept(
+    73211009L,
+    "Diabetes mellitus (disorder)",
+    "Diabetes mellitus",
+    "A metabolic disorder..."
+);
+----
+
+==== Validation
+
+Compact constructors enforce business rules:
+
+[source,java]
+----
+public Concept {
+    if (conceptId <= 0) {
+        throw new IllegalArgumentException("Concept ID must be positive");
+    }
+    // ... additional validation
+}
+----
+
+==== Factory Methods
+
+Specialized factory methods ensure correct semantic tag application:
+
+[source,java]
+----
+// Automatically adds (finding) semantic tag
+Concept finding = Concept.clinicalFinding(
+    38341003L,
+    "Hypertension",
+    "High blood pressure",
+    "Elevated arterial blood pressure"
+);
+----
+
+=== Koncept Relationships
+
+In a full implementation,
+Koncepts are connected through formal relationships.
+For example,
+k:DiabetesMellitus[] is related to both k:EndocrineDisorder[]
+and k:MetabolicDisorder[] through subsumption,
+while its definition includes existential restrictions to
+k:PancreaticStructure[] and k:Hyperglycemia[].
+
+[plantuml]
+....
+@startuml
+skinparam rectangleBorderColor #999999
+skinparam arrowColor #666666
+skinparam defaultFontName Noto Sans
+left to right direction
+
+rectangle "Diabetes mellitus" as A #ffcccc
+rectangle "Endocrine disorder" as B #cce5ff
+rectangle "Metabolic disorder" as C #cce5ff
+rectangle "Disease" as D #e6f3ff
+rectangle "Pancreatic structure" as E #ffe6cc
+rectangle "Hyperglycemia" as F #ccffcc
+
+A --> B : is-a
+A --> C : is-a
+B --> D : is-a
+C --> D : is-a
+A --> E : finding-site
+A --> F : has-finding
+@enduml
+....
+
+=== Description Logic Representation
+
+SNOMED CT Koncepts can be expressed in description logic notation.
+The definition of k:DiabetesMellitus[] is:
+
+[source]
+----
+Diabetes mellitus ⊑ Endocrine disorder ⊓ Metabolic disorder ⊓
+    ∃ finding-site.Pancreatic structure ⊓
+    ∃ has-finding.Hyperglycemia
+----
+
+Where: * `⊑` represents subsumption (is-a) * `⊓` represents
+intersection (and) * `∃` represents existential restriction (some)
+
+=== Primitive vs. Fully Defined
+
+[cols="1,3,3"]
+|===
+|Type |Definition |Example
+
+|Primitive
+|Necessary conditions only
+|"A disease affecting the pancreas" (not sufficient — other diseases also affect pancreas)
+
+|Fully Defined
+|Necessary and sufficient conditions
+|"A metabolic disorder with hyperglycemia, caused by insulin deficiency or resistance"
+|===
+
+The distinction is critical for automated classification.
+A fully defined Koncept like k:DiabetesMellitus[] provides
+necessary _and_ sufficient conditions,
+enabling a DL reasoner to infer its position in the hierarchy. 
+A primitive Koncept like k:Disease[] provides only necessary conditions —
+subsumption relationships must be asserted by human modelers.
+
+The `isPrimitive()` method provides a simplified check:
+
+[source,java]
+----
+if (concept.isPrimitive()) {
+    // Handle incomplete definition
+    // May need human review for classification
+} else {
+    // Fully defined — can be automatically classified
+    // Description logic reasoner can infer relationships
+}
+----
+
+=== Future Enhancements
+
+The Koncept model could be extended with:
+
+* Relationship representation
+* Role groups for complex definitions
+* Effective time and versioning
+* Multiple language support
+* Reference set membership
+* Concrete domains (numeric values, strings)
