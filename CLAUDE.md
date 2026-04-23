@@ -6,10 +6,12 @@ Run `mvn validate` before any other work. This unpacks current build
 standards into `.claude/standards/`. Do not proceed without this step.
 
 Because this repo has no sibling parent in its local reactor, Maven
-resolves `network.ike.platform:ike-parent:1` and
-`network.ike.docs:ike-doc-maven-plugin:1` directly from Nexus. If
-those are not yet released (or not in your local repo), the build
-will fail at project-load time.
+resolves `network.ike.platform:ike-parent:1-SNAPSHOT` and
+`network.ike.docs:ike-doc-maven-plugin:1-SNAPSHOT` directly from the
+local repo (during development) or Nexus (once released). If those
+are not yet built locally (or not in Nexus), the build will fail at
+project-load time — run `mvn install` in `ike-docs` and `ike-platform`
+first.
 
 After validate completes, read and follow these files in `.claude/standards/`:
 
