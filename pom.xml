@@ -33,11 +33,10 @@
     <artifactId>doc-example</artifactId>
     <version>1-SNAPSHOT</version>
     <!-- pom packaging: doc-only consumer post-#321. The asciidoc
-         source payload is attached as <classifier>asciidoc</classifier>
-         (will be renamed to <classifier>adoc</classifier> in #321
-         phase 3b) by maven-assembly-plugin in ike-parent's
-         doc-pipeline profile. Renderer outputs (PDF, HTML) attach
-         as additional classifiers. -->
+         source payload is attached as <classifier>adoc</classifier>
+         by maven-assembly-plugin in ike-parent's doc-pipeline
+         profile. Renderer outputs (PDF, HTML) attach as additional
+         classifiers. -->
     <packaging>pom</packaging>
 
     <name>IKE Documentation Example</name>
