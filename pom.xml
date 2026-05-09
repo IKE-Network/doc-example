@@ -5,7 +5,8 @@
 
   A standalone doc-only project that inherits from ike-parent
   (released to Nexus). Serves as:
-    1. Proof that ike-doc packaging works as an external consumer
+    1. Reference doc-only consumer of ike-parent
+       (<packaging>pom</packaging> + adoc classifier per ike-issues#321)
     2. Comprehensive renderer/pipeline test vehicle
     3. Template for new documentation projects
 
@@ -30,9 +31,13 @@
     <groupId>network.ike.examples</groupId>
     <artifactId>doc-example</artifactId>
     <version>1-SNAPSHOT</version>
-    <!-- ike-doc packaging: provided by ike-doc-maven-plugin (from
-         ike-docs) through extensions=true in ike-parent. -->
-    <packaging>ike-doc</packaging>
+    <!-- pom packaging: doc-only consumer post-#321. The asciidoc
+         source payload is attached as <classifier>asciidoc</classifier>
+         (will be renamed to <classifier>adoc</classifier> in #321
+         phase 3b) by maven-assembly-plugin in ike-parent's
+         doc-pipeline profile. Renderer outputs (PDF, HTML) attach
+         as additional classifiers. -->
+    <packaging>pom</packaging>
 
     <name>IKE Documentation Example</name>
     <description>

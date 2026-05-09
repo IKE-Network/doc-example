@@ -1,6 +1,6 @@
 # doc-example
 
-Standalone doc-only project using ike-doc packaging. Inherits network.ike.platform:ike-parent directly from Nexus.
+Standalone doc-only project. Inherits network.ike.platform:ike-parent directly from Nexus. Uses `<packaging>pom</packaging>` with asciidoc-source classifier (the canonical doc payload coordinate post-`IKE-Network/ike-issues#321`; classifier name will rename from `asciidoc` to `adoc` in the coordinated phase 3b release).
 
 ## Build Standards
 
