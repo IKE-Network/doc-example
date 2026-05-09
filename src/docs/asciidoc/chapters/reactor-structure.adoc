@@ -1,93 +1,102 @@
-== Reactor Structure
+== Project Structure
 
-The IKE pipeline is organized as a Maven reactor with a clear
-separation between the *aggregator* POM (which lists modules)
-and the *parent* POM chain (which provides inherited
-configuration).
+`doc-example` is a *standalone* doc-only project. It is a single
+Maven module that inherits from `ike-parent` and consumes the IKE
+documentation pipeline as released artifacts from Nexus. It is not
+a reactor and does not aggregate other modules — the comprehensive
+renderer/pipeline test surface comes from a single
+`src/docs/asciidoc/` tree exercised against every supported PDF
+backend.
 
-=== Aggregator vs Parent
+=== Inheritance
 
-Aggregator POM (`pipeline/pom.xml`)::
-Lists all modules in dependency order. Running `mvn clean verify` from the project root builds everything. The aggregator is *not* a parent -- no module inherits from it.
+[source]
+----
+network.ike.platform:ike-parent (released to Nexus)
+            ↑
+network.ike.examples:doc-example (this project)
+----
 
-Parent POM chain::
-`ike-parent` -> `java-parent` -> your project. Each layer adds configuration that child modules inherit automatically.
+`ike-parent` provides:
 
-=== Module Overview
+* AsciiDoc rendering pipeline configuration
+  (asciidoctor-maven-plugin, multi-renderer PDF wrappers, Kroki
+  integration, theme/font/XSL artifact unpacks).
+* Java toolchain configuration for hybrid modules (compiler,
+  surefire/failsafe, JPMS, javadoc, signing). Doc-only modules
+  ignore these but inherit them harmlessly.
+* Plugin and dependency version management for the IKE ecosystem
+  (`ike-doc-maven-plugin`, `koncept-asciidoc-extension`,
+  `minimal-fonts`, `docbook-xsl`, etc.).
 
-[cols="2,1,4"]
+There is no separate `java-parent`; an earlier revision of the
+ecosystem split Java vs. doc concerns across two parents, but the
+post-`IKE-Network/ike-issues#216` topology consolidates both into
+`ike-parent`.
+
+=== Packaging shape
+
+`doc-example` declares `<packaging>pom</packaging>` post-`IKE-Network/ike-issues#321`.
+The AsciiDoc source payload is auto-attached as
+`<classifier>adoc</classifier><type>zip</type>` by
+`maven-assembly-plugin` running in `ike-parent`'s `doc-pipeline`
+profile (which activates path-conditionally on
+`src/docs/asciidoc/` existence). Renderer outputs (PDF, HTML)
+attach as additional classifiers when their toggles are enabled.
+
+This shape applies uniformly to doc-only modules and to hybrid
+modules (Java code that also ships reference docs); the only
+difference is the primary packaging type — `pom` for doc-only,
+`jar` (or `maven-plugin`, etc.) for hybrid.
+
+=== Ecosystem context
+
+`doc-example` is one of three reference projects in the IKE
+ecosystem:
+
+[cols="2,1,3"]
 |===
-| Module | Packaging | Role
+| Project | Repo | Role
 
-| `minimal-fonts`
-| `jar`
-| 13 Noto TTF fonts packaged as a Maven artifact. Downloaded once from GitHub releases, cached locally.
-
-| `docbook-xsl`
-| `jar`
-| DocBook XSL 1.79.2 stylesheets + IKE FO customization layer. Enables the DocBook -> XSL-FO -> XEP pipeline entirely through Maven.
-
-| `koncept-asciidoc-extension`
-| `jar`
-| AsciidoctorJ SPI extension providing the `k:Name[]` inline macro for formally identified terminology concepts. Renders SVG badges for HTML/PDF and DocBook phrases for XSL-FO. Auto-generates a glossary section with definitions, axioms, and SNOMED CT identifiers.
-
-| `ike-parent`
-| `pom`
-| Parent POM for all documentation projects. Provides the asciidoctor-maven-plugin configuration, PDF renderer profiles, Kroki diagram integration, and shared extensions.
-
-| `java-parent`
-| `pom`
-| Extends `ike-parent` with Java compiler, test framework (JUnit 5, AssertJ, Mockito), and JPMS support.
+| `doc-example`
+| `IKE-Network/doc-example`
+| Standalone doc-only consumer of `ike-parent`. Comprehensive
+  renderer/pipeline test vehicle. Template for new documentation
+  projects.
 
 | `example-project`
-| `jar`
-| Reference implementation. Java source code + AsciiDoc documentation using all pipeline features.
+| `IKE-Network/example-project`
+| Standalone hybrid consumer (Java code + reference docs).
+  Demonstrates `<packaging>jar</packaging>` with the doc-pipeline
+  profile auto-activating on the side.
+
+| `ike-example-ws`
+| `IKE-Network/ike-example-ws`
+| Workspace integration test harness. Composes `doc-example` and
+  `example-project` via `ws:init` and exercises workspace-layer
+  goals against a real multi-repo scenario.
 |===
 
-=== Module Dependency Graph
+The upstream IKE plumbing repos (`ike-tooling`, `ike-docs`,
+`ike-platform`) provide the parent POMs, BOMs, and plugins that
+this project consumes. They release independently to Nexus on
+their own cadences.
 
-[plantuml]
-....
-@startuml
-skinparam defaultFontName Noto Sans
-top to bottom direction
+=== Build
 
-rectangle "pipeline\n(aggregator POM)" as A #f9f
+Single-command build of HTML + the default PDF renderer:
 
-rectangle "minimal-fonts\nJAR: Noto TTF fonts" as B
-rectangle "docbook-xsl\nJAR: DocBook XSL 1.79.2" as C
-rectangle "koncept-asciidoc-extension\nJAR: k:Name[] macro" as G
-rectangle "ike-parent\nPOM: AsciiDoc pipeline" as D #bbf
-rectangle "java-parent\nPOM: Java 25 + test" as E #bbf
-rectangle "example-project\nJAR: demo app + docs" as F
+[source,bash]
+----
+mvn clean verify
+----
 
-A --> B : lists module
-A --> C : lists module
-A --> G : lists module
-A --> D : lists module
-A --> E : lists module
-A --> F : lists module
+Activate additional renderers via property toggles:
 
-D ..> C : uses in pdf-xep profile
-D ..> G : plugin dependency
-E --> D : parent
-F --> E : parent
-F --> B : dependency
-@enduml
-....
+[source,bash]
+----
+mvn clean verify -Dike.pdf.prawn -Dike.pdf.fop
+----
 
-=== Build Order
-
-Maven's reactor sorts modules by their dependency graph.
-The explicit order in the aggregator POM mirrors this:
-
-. `minimal-fonts` -- no dependencies, built first
-. `docbook-xsl` -- no dependencies
-. `koncept-asciidoc-extension` -- no dependencies, standalone Java 17 module
-. `ike-parent` -- POM packaging, installed to local repo
-. `java-parent` -- parent is `ike-parent`
-. `example-project` -- parent is `java-parent`, depends on `minimal-fonts`
-
-The Maven reactor handles this ordering automatically.
-Infrastructure modules are built and installed first,
-then the example project builds with the selected PDF renderer.
+See "`Renderer Pipelines`" in the project site index for the full
+toggle matrix.

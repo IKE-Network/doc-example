@@ -6,7 +6,7 @@ that inherits the full pipeline.
 === Prerequisites
 
 * *Maven 4+* -- required by the reactor POM (uses `modelVersion 4.1.0`)
-* *Java 17+* -- minimum for asciidoctorj; Java 25 if using `java-parent`
+* *Java 25* -- the `ike-parent` Java toolchain target
 * *Node.js 18+* -- optional, only needed for `svgo` (Prawn SVG fixing)
 
 The Maven enforcer plugin validates these at build time with
@@ -20,28 +20,30 @@ parent (or Java parent if you have source code):
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.1.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0
+         http://maven.apache.org/xsd/maven-4.1.0.xsd">
     <modelVersion>4.1.0</modelVersion>
 
     <parent>
-        <groupId>network.ike</groupId>
-        <artifactId>java-parent</artifactId>          <!--1-->
-        <version>1.1.0-SNAPSHOT</version>
-        <relativePath>../java-parent/pom.xml</relativePath>
+        <groupId>network.ike.platform</groupId>
+        <artifactId>ike-parent</artifactId>           <!--1-->
+        <version>26</version>
+        <relativePath/>
     </parent>
 
+    <groupId>com.example</groupId>
     <artifactId>my-project</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>My Project</name>
 
     <dependencies>
         <dependency>
-            <groupId>network.ike</groupId>
+            <groupId>network.ike.docs</groupId>
             <artifactId>minimal-fonts</artifactId>    <!--2-->
+            <type>zip</type>
         </dependency>
     </dependencies>
 
@@ -55,7 +57,7 @@ parent (or Java parent if you have source code):
     </build>
 </project>
 ----
-<1> Use `java-parent` for Java projects, `ike-parent` for docs-only projects
+<1> `ike-parent` covers both doc-only and Java-plus-docs (hybrid) projects; the post-`IKE-Network/ike-issues#216` topology consolidated the previously-distinct `java-parent` into `ike-parent`.
 <2> Required for Prawn PDF font rendering; version managed by parent
 <3> Declares the plugin so Maven runs it; all configuration inherited from parent
 
@@ -84,22 +86,21 @@ Create `src/docs/asciidoc/index.adoc`:
 Your content here.
 ----
 
-=== Step 3: Add to the Reactor
+=== Step 3 (workspace consumers): Add to a workspace
 
-Add your module to the aggregator `pom.xml` at the project root:
+If your project lives inside an IKE workspace alongside other
+subprojects, register it via:
 
-[source,xml]
+[source,bash]
 ----
-<modules>
-    <module>minimal-fonts</module>
-    <module>docbook-xsl</module>
-    <module>koncept-asciidoc-extension</module>
-    <module>ike-parent</module>
-    <module>java-parent</module>
-    <module>example-project</module>
-    <module>my-project</module>            <!-- add here -->
-</modules>
+mvn ws:add -Drepo=git@github.com:your-org/my-project.git
 ----
+
+`ws:add` clones the repository, derives the subproject name and
+groupId from the cloned POM, and appends the subproject to the
+workspace's `workspace.yaml` and reactor POM. Standalone projects
+(not inside a workspace) skip this step entirely — Maven discovers
+the project from its own `pom.xml`.
 
 === Step 4: Build
 
@@ -192,15 +193,15 @@ and 20+ other diagram types.
 === Cross-Module Includes
 
 To include documentation from another module,
-add a dependency with the `asciidoc` classifier:
+add a dependency with the `adoc` classifier:
 
 [source,xml]
 ----
 <dependency>
-    <groupId>network.ike</groupId>
+    <groupId>com.example</groupId>
     <artifactId>other-project</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <classifier>asciidoc</classifier>
+    <classifier>adoc</classifier>
     <type>zip</type>
 </dependency>
 ----

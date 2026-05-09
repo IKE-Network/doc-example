@@ -69,8 +69,11 @@ ike-tooling -> ike-docs -> ike-platform -> [doc-example, example-project] -> ike
 ----
 
 `doc-example` releases after `ike-platform` (whose `ike-parent` this
-project consumes) and after `ike-docs` (whose `ike-doc-maven-plugin`
-provides the `ike-doc` packaging at `extensions=true`).
+project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin`
+provides the AsciiDoc render pipeline declared at
+`${ike-docs.version}` in `ike-parent`'s `<pluginManagement>`).
+Source-payload artifacts attach as `<classifier>adoc</classifier>`
+post-`IKE-Network/ike-issues#321`.
 
 == Renderer Pipelines
 
