@@ -60,7 +60,7 @@ CAUTION: This is a caution admonition. Potential for data loss.
 
 === Block Quotes
 
-[quote, The IKE Community, Documentation Standards]
+[quote, The IKE Network, Documentation Standards]
 ____
 Good documentation is not just accurate —
 it is discoverable,

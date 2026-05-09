@@ -1,5 +1,5 @@
 = IKE Documentation Pipeline — Feature Test
-:author: IKE Community
+:author: IKE Network
 :email: info@ike.network
 :revnumber: {project-version}
 :revdate: {docdate}

@@ -68,7 +68,7 @@ Create `src/docs/asciidoc/index.adoc`:
 [source,asciidoc]
 ----
 = My Project Documentation
-:author: IKE Community
+:author: IKE Network
 :email: info@ike.network
 :revnumber: {project-version}
 :revdate: {docdate}
