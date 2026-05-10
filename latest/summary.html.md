@@ -27,5 +27,5 @@ canonical_url: https://github.com/IKE-Network/doc-example/summary.html
 | --- | --- |
 | GroupId | network.ike.examples |
 | ArtifactId | doc-example |
-| Version | 9 |
+| Version | 10 |
 | Type | pom |
