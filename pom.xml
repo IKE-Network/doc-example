@@ -31,7 +31,7 @@
 
     <groupId>network.ike.examples</groupId>
     <artifactId>doc-example</artifactId>
-    <version>4</version>
+    <version>5-SNAPSHOT</version>
     <!-- pom packaging: doc-only consumer post-#321. The asciidoc
          source payload is attached as <classifier>adoc</classifier>
          by maven-assembly-plugin in ike-parent's doc-pipeline
