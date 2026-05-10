@@ -12,7 +12,7 @@ The following is a list of compile dependencies for this project. These dependen
 
 | GroupId | ArtifactId | Version | Type | Licenses |
 | --- | --- | --- | --- | --- |
-| network.ike.docs | [minimal-fonts](https://github.com/IKE-Network/ike-minimal-fonts)[1] | 9 | zip | [SIL Open Font License 1.1](https://scripts.sil.org/OFL)[2] |
+| network.ike.docs | [minimal-fonts](https://github.com/IKE-Network/ike-minimal-fonts)[1] | 10 | zip | [SIL Open Font License 1.1](https://scripts.sil.org/OFL)[2] |
 
 ## [provided](#provided)
 
@@ -20,8 +20,8 @@ The following is a list of provided dependencies for this project. These depende
 
 | GroupId | ArtifactId | Version | Classifier | Type | Licenses |
 | --- | --- | --- | --- | --- | --- |
-| network.ike.docs | [docbook-xsl](https://github.com/IKE-Network/ike-docbook-xsl)[3] | 9 | - | jar | [MIT License (DocBook XSL Stylesheets)](https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/COPYING)[4][Apache License 2.0 (IKE Customization Layer)](https://www.apache.org/licenses/LICENSE-2.0)[5] |
-| network.ike.docs | [ike-doc-resources](https://github.com/IKE-Network/ike-docs)[6] | 9 | - | jar | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
+| network.ike.docs | [docbook-xsl](https://github.com/IKE-Network/ike-docbook-xsl)[3] | 10 | - | jar | [MIT License (DocBook XSL Stylesheets)](https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/COPYING)[4][Apache License 2.0 (IKE Customization Layer)](https://www.apache.org/licenses/LICENSE-2.0)[5] |
+| network.ike.docs | [ike-doc-resources](https://github.com/IKE-Network/ike-docs)[6] | 10 | - | jar | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
 | network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 148 | asciidoctorconfig | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
 | network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 148 | built-with | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
 | network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 148 | claude | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
@@ -36,7 +36,7 @@ No transitive dependencies are required for this project.
 
 ## [Dependency Tree](#dependency-tree)
 
-- network.ike.examples:doc-example:pom:5 ** 
+- network.ike.examples:doc-example:pom:6 ** 
   
   | IKE Documentation Example |
   | --- |
@@ -52,17 +52,17 @@ No transitive dependencies are required for this project.
       | IKE Build Standards |
       | --- |
       | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.docs:ike-doc-resources:jar:9 (provided) ** 
+    - network.ike.docs:ike-doc-resources:jar:10 (provided) ** 
       
       | IKE Documentation Resources |
       | --- |
       | **Description: **Shared build resources for the IKE documentation pipeline: assembly descriptors, PDF themes, renderer configurations, SVGO configs, and AsciiDoc shared docinfo. **URL: **[https://github.com/IKE-Network/ike-docs](https://github.com/IKE-Network/ike-docs)[6] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.docs:docbook-xsl:jar:9 (provided) ** 
+    - network.ike.docs:docbook-xsl:jar:10 (provided) ** 
       
       | IKE DocBook XSL Stylesheets |
       | --- |
       | **Description: **DocBook XSL 1.79.2 stylesheets with IKE FO customization layer. Ready-to-use artifact for the AsciiDoc → DocBook5 → XSL-FO → PDF pipeline. **URL: **[https://github.com/IKE-Network/ike-docbook-xsl](https://github.com/IKE-Network/ike-docbook-xsl)[3] **Project Licenses: **[MIT License (DocBook XSL Stylesheets)](https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/COPYING)[4], [Apache License 2.0 (IKE Customization Layer)](https://www.apache.org/licenses/LICENSE-2.0)[5] |
-    - network.ike.docs:minimal-fonts:zip:9 (compile) ** 
+    - network.ike.docs:minimal-fonts:zip:10 (compile) ** 
       
       | IKE Minimal Fonts |
       | --- |
@@ -97,9 +97,9 @@ No transitive dependencies are required for this project.
 
 | Total | Size | Entries | Classes | Packages | Java Version | Debug Information |
 | --- | --- | --- | --- | --- | --- | --- |
-| docbook-xsl-9.jar | 25.8 MB | 1955 | 0 | 0 | - | - |
-| ike-doc-resources-9.jar | 21.8 kB | 31 | 0 | 0 | - | - |
-| minimal-fonts-9.zip | 3.1 MB | - | - | - | - | - |
+| docbook-xsl-10.jar | 25.8 MB | 1955 | 0 | 0 | - | - |
+| ike-doc-resources-10.jar | 21.8 kB | 31 | 0 | 0 | - | - |
+| minimal-fonts-10.zip | 3.1 MB | - | - | - | - | - |
 | ike-build-standards-148-asciidoctorconfig.zip | 0.2 kB | - | - | - | - | - |
 | ike-build-standards-148-built-with.zip | 3.5 kB | - | - | - | - | - |
 | ike-build-standards-148-claude.zip | 81 kB | - | - | - | - | - |
