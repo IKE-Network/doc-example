@@ -1,0 +1,52 @@
+---
+date_published: 2026-05-09
+date_modified: 2026-05-09
+canonical_url: https://github.com/IKE-Network/doc-example/dependency-info.html
+---
+
+# Maven Coordinates
+
+## [Apache Maven](#apache-maven)
+
+```
+<dependency>
+  <groupId>network.ike.examples</groupId>
+  <artifactId>doc-example</artifactId>
+  <version>3</version>
+  <type>pom</type>
+</dependency>
+```
+
+## [Apache Ivy](#apache-ivy)
+
+```
+<dependency org="network.ike.examples" name="doc-example" rev="3">
+  <artifact name="doc-example" type="pom" />
+</dependency>
+```
+
+## [Groovy Grape](#groovy-grape)
+
+```
+@Grapes(
+@Grab(group='network.ike.examples', module='doc-example', version='3')
+)
+```
+
+## [Gradle/Grails](#gradle-grails)
+
+```
+implementation 'network.ike.examples:doc-example:3'
+```
+
+## [Scala SBT](#scala-sbt)
+
+```
+libraryDependencies += "network.ike.examples" % "doc-example" % "3"
+```
+
+## [Leiningen](#leiningen)
+
+```
+[network.ike.examples/doc-example "3"]
+```
