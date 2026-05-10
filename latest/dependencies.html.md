@@ -4,107 +4,39 @@ date_modified: 2026-05-09
 canonical_url: https://github.com/IKE-Network/doc-example/dependencies.html
 ---
 
-# Project Dependencies
+# Dependencies (SBOM)
 
-## [compile](#compile)
+Full transitive dependency graph for `doc-example` 8, generated from [bom.json](bom.json)[1] (CycloneDX 1.6) at build time. Same SBOM source as the SPDX-grouped [licenses.html](licenses.html)[2] and the curated [built-with.html](built-with.html)[3] — three views of the same data.
 
-The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:
+## [#summary](#summary)Summary
 
-| GroupId | ArtifactId | Version | Type | Licenses |
+| Total components | 8 |
+| --- | --- |
+| Distinct license expressions | 3 |
+
+## [#components](#components)Components
+
+Sorted by group, artifact, version. Click [bom.json](bom.json)[1] for the raw machine-readable form (Dependency-Track, Trivy, Snyk, GitHub dep-graph all ingest it directly).
+
+| Group | Artifact | Version | License | Type |
 | --- | --- | --- | --- | --- |
-| network.ike.docs | [minimal-fonts](https://github.com/IKE-Network/ike-minimal-fonts)[1] | 11 | zip | [SIL Open Font License 1.1](https://scripts.sil.org/OFL)[2] |
+| `network.ike.docs` | `docbook-xsl` | `12` | `Apache-2.0 OR MIT License (DocBook XSL Stylesheets)` | library |
+| `network.ike.docs` | `ike-doc-resources` | `12` | `Apache-2.0` | library |
+| `network.ike.docs` | `minimal-fonts` | `12` | `OFL-1.1` | library |
+| `network.ike.tooling` | `ike-build-standards` | `150` | `Apache-2.0` | library |
+| `network.ike.tooling` | `ike-build-standards` | `150` | `Apache-2.0` | library |
+| `network.ike.tooling` | `ike-build-standards` | `150` | `Apache-2.0` | library |
+| `network.ike.tooling` | `ike-build-standards` | `150` | `Apache-2.0` | library |
+| `network.ike.tooling` | `ike-build-standards` | `150` | `Apache-2.0` | library |
 
-## [provided](#provided)
+## [#download](#download)Download
 
-The following is a list of provided dependencies for this project. These dependencies are required to compile the application, but should be provided by default when using the library:
+- [Software Bill of Materials (CycloneDX, JSON)](bom.json)[1] — raw machine-readable form. Includes purls, hashes, and dependency-graph edges that this page summarizes.
+- [bom.xml](bom.xml)[4] — same content in XML.
+- As a Maven artifact: pull `doc-example:​8` with `<classifier>cyclonedx</classifier><type>json</type>` from Nexus / Maven Central.
 
-| GroupId | ArtifactId | Version | Classifier | Type | Licenses |
-| --- | --- | --- | --- | --- | --- |
-| network.ike.docs | [docbook-xsl](https://github.com/IKE-Network/ike-docbook-xsl)[3] | 11 | - | jar | [MIT License (DocBook XSL Stylesheets)](https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/COPYING)[4][Apache License 2.0 (IKE Customization Layer)](https://www.apache.org/licenses/LICENSE-2.0)[5] |
-| network.ike.docs | [ike-doc-resources](https://github.com/IKE-Network/ike-docs)[6] | 11 | - | jar | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-| network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 149 | asciidoctorconfig | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-| network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 149 | built-with | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-| network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 149 | claude | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-| network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 149 | config | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-| network.ike.tooling | [ike-build-standards](https://ike.network/ike-tooling/ike-build-standards/)[8] | 149 | site-theme | zip | [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
+## [#see-also](#see-also)See also
 
-# Project Transitive Dependencies
-
-No transitive dependencies are required for this project.
-
-# Project Dependency Graph
-
-## [Dependency Tree](#dependency-tree)
-
-- network.ike.examples:doc-example:pom:7 ** 
-  
-  | IKE Documentation Example |
-  | --- |
-  | **Description: **Documentation-only project demonstrating the IKE AsciiDoc pipeline. Exercises all diagram types, Koncept macros, typography, and layout features across all 6 PDF renderers. **URL: **[https://github.com/IKE-Network/doc-example](https://github.com/IKE-Network/doc-example)[9] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-  
-    - network.ike.tooling:ike-build-standards:zip:claude:149 (provided) ** 
-      
-      | IKE Build Standards |
-      | --- |
-      | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.tooling:ike-build-standards:zip:config:149 (provided) ** 
-      
-      | IKE Build Standards |
-      | --- |
-      | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.docs:ike-doc-resources:jar:11 (provided) ** 
-      
-      | IKE Documentation Resources |
-      | --- |
-      | **Description: **Shared build resources for the IKE documentation pipeline: assembly descriptors, PDF themes, renderer configurations, SVGO configs, and AsciiDoc shared docinfo. **URL: **[https://github.com/IKE-Network/ike-docs](https://github.com/IKE-Network/ike-docs)[6] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.docs:docbook-xsl:jar:11 (provided) ** 
-      
-      | IKE DocBook XSL Stylesheets |
-      | --- |
-      | **Description: **DocBook XSL 1.79.2 stylesheets with IKE FO customization layer. Ready-to-use artifact for the AsciiDoc → DocBook5 → XSL-FO → PDF pipeline. **URL: **[https://github.com/IKE-Network/ike-docbook-xsl](https://github.com/IKE-Network/ike-docbook-xsl)[3] **Project Licenses: **[MIT License (DocBook XSL Stylesheets)](https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/COPYING)[4], [Apache License 2.0 (IKE Customization Layer)](https://www.apache.org/licenses/LICENSE-2.0)[5] |
-    - network.ike.docs:minimal-fonts:zip:11 (compile) ** 
-      
-      | IKE Minimal Fonts |
-      | --- |
-      | **Description: **Minimal Noto font subset for IKE documentation (~4MB) **URL: **[https://github.com/IKE-Network/ike-minimal-fonts](https://github.com/IKE-Network/ike-minimal-fonts)[1] **Project Licenses: **[SIL Open Font License 1.1](https://scripts.sil.org/OFL)[2] |
-    - network.ike.tooling:ike-build-standards:zip:site-theme:149 (provided) ** 
-      
-      | IKE Build Standards |
-      | --- |
-      | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.tooling:ike-build-standards:zip:built-with:149 (provided) ** 
-      
-      | IKE Build Standards |
-      | --- |
-      | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-    - network.ike.tooling:ike-build-standards:zip:asciidoctorconfig:149 (provided) ** 
-      
-      | IKE Build Standards |
-      | --- |
-      | **Description: **Versioned Claude instruction files for IKE projects. Modular standards (Maven, Java, IKE-specific) distributed as a classified Maven artifact. **URL: **[https://ike.network/ike-tooling/ike-build-standards/](https://ike.network/ike-tooling/ike-build-standards/)[8] **Project Licenses: **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)[7] |
-
-# Licenses
-
-**SIL Open Font License 1.1: **IKE Minimal Fonts
-
-**Apache License, Version 2.0: **IKE Build Standards, IKE Documentation Example, IKE Documentation Resources
-
-**MIT License (DocBook XSL Stylesheets): **IKE DocBook XSL Stylesheets
-
-**Apache License 2.0 (IKE Customization Layer): **IKE DocBook XSL Stylesheets
-
-# Dependency File Details
-
-| Total | Size | Entries | Classes | Packages | Java Version | Debug Information |
-| --- | --- | --- | --- | --- | --- | --- |
-| docbook-xsl-11.jar | 25.8 MB | 1955 | 0 | 0 | - | - |
-| ike-doc-resources-11.jar | 21.8 kB | 31 | 0 | 0 | - | - |
-| minimal-fonts-11.zip | 3.1 MB | - | - | - | - | - |
-| ike-build-standards-149-asciidoctorconfig.zip | 0.2 kB | - | - | - | - | - |
-| ike-build-standards-149-built-with.zip | 3.5 kB | - | - | - | - | - |
-| ike-build-standards-149-claude.zip | 81 kB | - | - | - | - | - |
-| ike-build-standards-149-config.zip | 1.2 kB | - | - | - | - | - |
-| ike-build-standards-149-site-theme.zip | 3.4 kB | - | - | - | - | - |
-| 8 | 29 MB | 1986 | - | - | - | - |
-| compile: 1 | compile: 3.1 MB | - | - | - | - | - |
-| provided: 7 | provided: 25.9 MB | provided: 1986 | - | - | - |
+- [Licenses (SPDX)](licenses.html)[2] — same components grouped by license expression.
+- [Built With](built-with.html)[3] — curated narrative + per-license summary.
+- [ike-issues#341](https://github.com/IKE-Network/ike-issues/issues/341)[5] — the issue that introduced this page.
