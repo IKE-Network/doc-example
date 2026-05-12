@@ -18,4 +18,4 @@ The following is the distribution management information used by this project.
 
 ## [Site - ike-site](#site---ike-site)
 
-scpexe://proxy/srv/ike-site/examples/doc-example
+[https://ike.network/doc-example/](https://ike.network/doc-example/)[3]
