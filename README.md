@@ -128,16 +128,29 @@ in your project and add this property to your `pom.xml`:
 
 ### 5. Add Diagrams
 
-The pipeline supports Mermaid, PlantUML, and GraphViz via Kroki
-server-side rendering. No local tools needed.
+The IKE diagram standard prefers **PlantUML** for most cases
+and **GraphViz** when layout precision matters. Both render
+server-side via Kroki — no local tools needed. Mermaid is
+intentionally not part of the recommended toolset.
 
 ```asciidoc
-[mermaid]
-....
-graph LR
-    A[Source] --> B[Build] --> C[Output]
-....
+.Build pipeline
+[plantuml]
+----
+@startuml
+left to right direction
+rectangle "Source" as A
+rectangle "Build" as B
+rectangle "Output" as C
+A --> B --> C
+@enduml
+----
 ```
+
+See [`IKE-DIAGRAMS.md`](https://ike.network/ike-tooling/ike-build-standards/IKE-DIAGRAMS.html)
+for the diagram test (when a diagram earns its place), tool
+selection (PlantUML diagram-type matrix, when to use GraphViz),
+and authoring conventions.
 
 ### 6. Use Koncept Macros
 
