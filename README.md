@@ -1,12 +1,16 @@
 # IKE Documentation Example
 
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Documentation](https://img.shields.io/badge/docs-ike.network%2Fdoc--example-blue)](https://ike.network/doc-example/)
+[![IKE Network](https://img.shields.io/badge/IKE-Network-green)](https://ike.network/)
+
 A standalone documentation-only project that demonstrates the IKE
 AsciiDoc pipeline. Use this as a template for creating new
 documentation projects.
 
-- **Artifact**: `network.ike.examples:doc-example:1-SNAPSHOT`
-- **Packaging**: `ike-doc` (external consumer)
-- **Parent**: `network.ike.platform:ike-parent:1`
+- **Artifact**: `network.ike.examples:doc-example`
+- **Packaging**: `pom` with `<classifier>adoc</classifier>` source attachment
+- **Parent**: `network.ike.platform:ike-parent`
 
 ## Quick Start
 
@@ -155,3 +159,10 @@ installed to your local Maven repository):
 | AH PDF | `target/generated-docs/pdf-ah/{artifactId}.pdf` |
 | WeasyPrint PDF | `target/generated-docs/pdf-weasyprint/{artifactId}.pdf` |
 | XEP PDF | `target/generated-docs/pdf-xep/{artifactId}.pdf` |
+
+## Links
+
+- **Documentation:** [`https://ike.network/doc-example/`](https://ike.network/doc-example/)
+- **Workspace:** [`IKE-Network/ike-example-ws`](https://ike.network/ike-example-ws/) — clone the workspace to build doc-example alongside example-project and the integration tests
+- **Issues:** [`IKE-Network/ike-issues`](https://github.com/IKE-Network/ike-issues) (cross-project tracker)
+- **Source:** [`IKE-Network/doc-example`](https://github.com/IKE-Network/doc-example)
