@@ -188,9 +188,33 @@ installed to your local Maven repository):
 | WeasyPrint PDF | `target/generated-docs/pdf-weasyprint/{artifactId}.pdf` |
 | XEP PDF | `target/generated-docs/pdf-xep/{artifactId}.pdf` |
 
+## Doc as Code + LLM-Friendly
+
+This project follows the IKE Network's doc-as-code philosophy:
+build conventions, documentation standards, and AI-assistant
+guidance live as versioned Markdown files in
+[`ike-build-standards`](https://github.com/IKE-Network/ike-tooling/tree/main/ike-build-standards#readme)
+and are unpacked into every consumer's `.claude/standards/` at
+the `validate` phase. When a developer — or Claude itself —
+opens this project, the agent reads those standards and applies
+them automatically; contributors don't have to memorize the
+conventions.
+
+The standards most directly relevant to a documentation project are
+[`IKE-DOC.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-DOC.md)
+(module shapes; classifier-canonical attachment),
+[`IKE-DIAGRAMS.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-DIAGRAMS.md)
+(PlantUML / GraphViz authoring; the diagram test),
+[`IKE-ASCIIDOC-FRAGMENT.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-ASCIIDOC-FRAGMENT.md)
+(fragment-style topic authoring), and
+[`IKE-INDEX.md`](https://github.com/IKE-Network/ike-tooling/blob/main/ike-build-standards/src/main/standards/IKE-INDEX.md)
+(AsciiDoc index-term conventions). See the
+[full inventory](https://github.com/IKE-Network/ike-tooling/tree/main/ike-build-standards#readme).
+
 ## Links
 
 - **Documentation:** [`https://ike.network/doc-example/`](https://ike.network/doc-example/)
 - **Workspace:** [`IKE-Network/ike-example-ws`](https://ike.network/ike-example-ws/) — clone the workspace to build doc-example alongside example-project and the integration tests
+- **Build standards:** [`ike-build-standards`](https://ike.network/ike-tooling/ike-build-standards/)
 - **Issues:** [`IKE-Network/ike-issues`](https://github.com/IKE-Network/ike-issues) (cross-project tracker)
 - **Source:** [`IKE-Network/doc-example`](https://github.com/IKE-Network/doc-example)
