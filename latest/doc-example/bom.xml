@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:bb26d4dd-d905-3588-8256-1fc2f22610f1" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:9722c018-1563-3537-8440-f9fbf53dcbc1" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
     <lifecycles>
       <lifecycle>
@@ -27,11 +27,11 @@
         </component>
       </components>
     </tools>
-    <component type="library" bom-ref="pkg:maven/network.ike.examples/doc-example@20?type=pom">
+    <component type="library" bom-ref="pkg:maven/network.ike.examples/doc-example@21?type=pom">
       <publisher>IKE Network</publisher>
       <group>network.ike.examples</group>
       <name>doc-example</name>
-      <version>20</version>
+      <version>21</version>
       <description>Documentation-only project demonstrating the IKE AsciiDoc pipeline.
         Exercises all diagram types, Koncept macros, typography, and layout
         features across all 6 PDF renderers.</description>
@@ -40,7 +40,7 @@
           <id>Apache-2.0</id>
         </license>
       </licenses>
-      <purl>pkg:maven/network.ike.examples/doc-example@20?type=pom</purl>
+      <purl>pkg:maven/network.ike.examples/doc-example@21?type=pom</purl>
       <externalReferences>
         <reference type="website">
           <url>https://github.com/IKE-Network/doc-example</url>
@@ -368,7 +368,7 @@
     </component>
   </components>
   <dependencies>
-    <dependency ref="pkg:maven/network.ike.examples/doc-example@20?type=pom">
+    <dependency ref="pkg:maven/network.ike.examples/doc-example@21?type=pom">
       <dependency ref="pkg:maven/network.ike.tooling/ike-build-standards@166?classifier=claude&amp;type=zip"/>
       <dependency ref="pkg:maven/network.ike.tooling/ike-build-standards@166?classifier=config&amp;type=zip"/>
       <dependency ref="pkg:maven/network.ike.docs/ike-doc-resources@24?type=jar"/>
