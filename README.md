@@ -34,22 +34,37 @@ mvn clean verify -Dike.pdf.fop
 <project xmlns="http://maven.apache.org/POM/4.1.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.1.0
-         http://maven.apache.org/xsd/maven-4.1.0.xsd"
-         root="true">
+         http://maven.apache.org/xsd/maven-4.1.0.xsd">
     <modelVersion>4.1.0</modelVersion>
 
     <parent>
         <groupId>network.ike.platform</groupId>
         <artifactId>ike-parent</artifactId>
-        <version>1</version>
+        <version>54</version>
+        <relativePath/>
     </parent>
 
     <groupId>com.example</groupId>
     <artifactId>my-docs</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>ike-doc</packaging>
+    <!-- Classifier-canonical doc shape (ike-issues#321): pom
+         packaging with the asciidoc source attached as
+         <classifier>adoc</classifier> by ike-parent's
+         doc-pipeline profile. -->
+    <packaging>pom</packaging>
 
     <name>My Documentation Project</name>
+
+    <!-- Required (ike-issues#383): declare the gh-pages publish
+         location explicitly. ike-parent's inherited template
+         points to the in-reactor location and a build enforcer
+         fails consumers that don't override. -->
+    <distributionManagement>
+        <site>
+            <id>ike-site</id>
+            <url>https://ike.network/${project.artifactId}/</url>
+        </site>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -139,7 +154,7 @@ installed to your local Maven repository):
 
 - `network.ike.platform:ike-parent` (the parent POM)
 - `network.ike.platform:ike-bom` (optional — BOM for version alignment)
-- `network.ike.docs:ike-doc-maven-plugin` (provides `ike-doc` packaging)
+- `network.ike.docs:ike-doc-maven-plugin` (`idoc:*` render and packaging goals)
 - `network.ike.docs:ike-doc-resources`
 - `network.ike.docs:minimal-fonts`
 - `network.ike.docs:docbook-xsl`
