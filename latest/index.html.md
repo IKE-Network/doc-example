@@ -162,13 +162,17 @@ When creating a new IKE document project, copy the following:
 | `src/docs/asciidoc/` | Documentation source. Edit `index.adoc` and add `chapters/` includes as needed. This is the deliverable. |
 | `src/site/` | Maven Site Plugin source. Update `site.xml` (project name, repo URL) and `asciidoc/index.adoc` for your project. The Forest-theme `site.css` and `ike-logo.svg` come from `ike-build-standards` — inherited automatically; only override locally if you need per-project branding. |
 
+## [#not-published-to-maven-central](#not-published-to-maven-central)Not published to Maven Central
+
+`doc-example` is a reference template, not a library. Its releases are tagged on GitHub and deployed to the IKE Nexus, but it is deliberately **not** published to Maven Central — nothing should ever declare a dependency on it. You consume this project by reading it and copying its structure into a document project of your own. The IKE foundation (`ike-base-parent`, `ike-tooling`, `ike-docs`, `ike-platform`) is the part published to Central and meant to be inherited; see [the IKE Network landing page](https://ike.network/)[8] for the foundation/examples split.
+
 ## [#resources](#resources)Resources
 
 | Resource | URL |
 | --- | --- |
-| Source repository | [https://github.com/IKE-Network/doc-example](https://github.com/IKE-Network/doc-example)[8] |
-| Cross-project issue tracker | [https://github.com/IKE-Network/ike-issues](https://github.com/IKE-Network/ike-issues)[9] |
-| IKE Network landing page | [https://ike.network/](https://ike.network/)[10] |
+| Source repository | [https://github.com/IKE-Network/doc-example](https://github.com/IKE-Network/doc-example)[9] |
+| Cross-project issue tracker | [https://github.com/IKE-Network/ike-issues](https://github.com/IKE-Network/ike-issues)[10] |
+| IKE Network landing page | [https://ike.network/](https://ike.network/)[8] |
 | IKE Docs (renderer pipelines, `idoc:*` plugin) | [https://ike.network/ike-docs/](https://ike.network/ike-docs/)[7] |
 | IKE Platform (parent POM, BOM, workspace plugin) | [https://ike.network/ike-platform/](https://ike.network/ike-platform/)[3] |
 | Sibling: code+docs template | [https://ike.network/example-project/](https://ike.network/example-project/)[4] |
