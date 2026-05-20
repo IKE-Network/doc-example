@@ -218,3 +218,12 @@ The standards most directly relevant to a documentation project are
 - **Build standards:** [`ike-build-standards`](https://ike.network/ike-tooling/ike-build-standards/)
 - **Issues:** [`IKE-Network/ike-issues`](https://github.com/IKE-Network/ike-issues) (cross-project tracker)
 - **Source:** [`IKE-Network/doc-example`](https://github.com/IKE-Network/doc-example)
+<!-- BEGIN ike-managed: developer-setup -->
+
+## Developer Setup
+
+New to IKE development? The
+[Developer Environment guide](https://ike.network/ike-tooling/ike-build-standards/developer-environment.html)
+covers IDE configuration, JDK 25 setup, and the tooling conventions
+every IKE workspace expects — start there before your first build.
+<!-- END ike-managed: developer-setup -->
