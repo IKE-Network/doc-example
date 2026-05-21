@@ -48,14 +48,14 @@ The pattern decouples the **source** (which is what gets versioned and reused) f
 
 ## [#role-in-the-ike-ecosystem](#role-in-the-ike-ecosystem)Role in the IKE Ecosystem
 
-This project is the canonical template for an **IKE deliverable that is itself a published document**. The companion project [example-project](https://ike.network/example-project/)[4] is the template for a **JAR + docs** deliverable. Together they cover the two common shapes of IKE consumer:
+This project is the canonical template for an **IKE deliverable that is itself a published document**. The companion project [project-example](https://ike.network/project-example/)[4] is the template for a **JAR + docs** deliverable. Together they cover the two common shapes of IKE consumer:
 
 | Template | When to copy from it |
 | --- | --- |
 | `doc-example` | You’re shipping a published document as the primary deliverable — a guide, specification, manual, or reference. No Java compile path. Uses `<packaging>pom</packaging>` and ships the source as the `adoc` classifier. |
-| [example-project](https://ike.network/example-project/)[4] | You’re shipping a JAR (a library, a CLI, a service) AND want rendered docs alongside it. |
+| [project-example](https://ike.network/project-example/)[4] | You’re shipping a JAR (a library, a CLI, a service) AND want rendered docs alongside it. |
 
-For the workspace-aggregator template, see [ike-example-ws](https://ike.network/ike-example-ws/)[5].
+For the workspace-aggregator template, see [workspace-example](https://ike.network/workspace-example/)[5].
 
 ## [#why-packagingpom-packaging-for-doc-only](#why-packagingpom-packaging-for-doc-only)Why `<packaging>pom</packaging>` for doc-only
 
@@ -71,10 +71,10 @@ For a doc-only module like `doc-example`, `<packaging>pom</packaging>` gives exa
 ## [#release-cascade-position](#release-cascade-position)Release Cascade Position
 
 ```
-ike-tooling -> ike-docs -> ike-platform -> [doc-example, example-project] -> ike-example-ws
+ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-example
 ```
 
-`doc-example` releases after `ike-platform` (whose `ike-parent` this project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin` provides the `idoc:*` render goals declared at `49` in `ike-parent’s `<pluginManagement>`). The workspace-orchestrated release flow is `ws:release-publish` from `ike-example-ws`, which detects source-changed subprojects and releases them in topological order — see [ike-example-ws](https://ike.network/ike-example-ws/)[5].
+`doc-example` releases after `ike-platform` (whose `ike-parent` this project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin` provides the `idoc:*` render goals declared at `49` in `ike-parent’s `<pluginManagement>`). The workspace-orchestrated release flow is `ws:release-publish` from `workspace-example`, which detects source-changed subprojects and releases them in topological order — see [workspace-example](https://ike.network/workspace-example/)[5].
 
 ## [#renderer-pipelines](#renderer-pipelines)Renderer Pipelines
 
@@ -175,5 +175,6 @@ When creating a new IKE document project, copy the following:
 | IKE Network landing page | [https://ike.network/](https://ike.network/)[8] |
 | IKE Docs (renderer pipelines, `idoc:*` plugin) | [https://ike.network/ike-docs/](https://ike.network/ike-docs/)[7] |
 | IKE Platform (parent POM, BOM, workspace plugin) | [https://ike.network/ike-platform/](https://ike.network/ike-platform/)[3] |
-| Sibling: code+docs template | [https://ike.network/example-project/](https://ike.network/example-project/)[4] |
-| Sibling: workspace-aggregator template | [https://ike.network/ike-example-ws/](https://ike.network/ike-example-ws/)[5] |
+| Sibling: code+docs template | [https://ike.network/project-example/](https://ike.network/project-example/)[4] |
+| Sibling: integration-test harness | [https://ike.network/integration-tests-example/](https://ike.network/integration-tests-example/)[11] |
+| Sibling: workspace-aggregator template | [https://ike.network/workspace-example/](https://ike.network/workspace-example/)[5] |

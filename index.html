@@ -86,13 +86,13 @@
 					<div class="header-title">doc-example</div>
 						<div class="header-subtitle">
 							<span class="version-prefix">Version</span>
-							<span class="version">32</span>
+							<span class="version">33-SNAPSHOT</span>
 						</div>
 					</div>
 					<div class="navbar-brand header-xxs visible-xs">
 						<div class="header-title">doc-example</div>
 						<div class="header-subtitle">
-							Version <strong>32</strong>
+							Version <strong>33-SNAPSHOT</strong>
 						</div>
 					</div>
 					<form class="navbar-form site-search site-search-xs visible-xs" ng-show="showSearchInput">
@@ -148,7 +148,9 @@
 <li><a href="https://ike.network/"><i class="fas fa-file-alt"></i> IKE Network</a></li>
 <li><a href="https://ike.network/ike-platform/"><i class="fas fa-file-alt"></i> IKE Platform (ike-parent)</a></li>
 <li><a href="https://ike.network/ike-docs/"><i class="fas fa-file-alt"></i> IKE Docs (ike-doc-maven-plugin)</a></li>
-<li><a href="https://ike.network/example-project/"><i class="fas fa-file-alt"></i> example-project (sibling)</a></li>
+<li><a href="https://ike.network/project-example/"><i class="fas fa-file-alt"></i> project-example (sibling)</a></li>
+<li><a href="https://ike.network/integration-tests-example/"><i class="fas fa-file-alt"></i> integration-tests-example (sibling)</a></li>
+<li><a href="https://ike.network/workspace-example/"><i class="fas fa-file-alt"></i> workspace-example (workspace)</a></li>
 </ul>
 		<h5 class="text-uppercase">Reports</h5>
 
@@ -174,7 +176,7 @@
 
 					<div class="col-md-12">
 					<div class="page-header visible-print-block">
-							<h3><small>doc-example</small><br/>							IKE Documentation Example 32
+							<h3><small>doc-example</small><br/>							IKE Documentation Example 33-SNAPSHOT
 							</h3>
 						</div>
 								<div class="home-xs visible-xs">
@@ -198,8 +200,14 @@
 												<a class="list-group-item" href="https://ike.network/ike-docs/">
 													<i class="fas fa-file-alt"></i>IKE Docs (ike-doc-maven-plugin)
 												</a>
-												<a class="list-group-item" href="https://ike.network/example-project/">
-													<i class="fas fa-file-alt"></i>example-project (sibling)
+												<a class="list-group-item" href="https://ike.network/project-example/">
+													<i class="fas fa-file-alt"></i>project-example (sibling)
+												</a>
+												<a class="list-group-item" href="https://ike.network/integration-tests-example/">
+													<i class="fas fa-file-alt"></i>integration-tests-example (sibling)
+												</a>
+												<a class="list-group-item" href="https://ike.network/workspace-example/">
+													<i class="fas fa-file-alt"></i>workspace-example (workspace)
 												</a>
 										<li class="list-group-item"><i class="fas fa-folder-open"></i>Reports</li>
 												<a class="list-group-item" href="project-info.html">
@@ -298,7 +306,7 @@
 </div>
 <div>
  <h2 id="role-in-the-ike-ecosystem"><a href="#role-in-the-ike-ecosystem"></a><a id="role-in-the-ike-ecosystem"></a>Role in the IKE Ecosystem</h2>
- <p>This project is the canonical template for an <strong>IKE deliverable that is itself a published document</strong>. The companion project <a href="https://ike.network/example-project/">example-project</a><sup class="visible-print-inline">[4]</sup> is the template for a <strong>JAR + docs</strong> deliverable. Together they cover the two common shapes of IKE consumer:</p>
+ <p>This project is the canonical template for an <strong>IKE deliverable that is itself a published document</strong>. The companion project <a href="https://ike.network/project-example/">project-example</a><sup class="visible-print-inline">[4]</sup> is the template for a <strong>JAR + docs</strong> deliverable. Together they cover the two common shapes of IKE consumer:</p>
  <table class="bodyTable table table-striped table-hover" style="background: #FFFFFF">
   <thead>
    <tr class="a">
@@ -312,12 +320,12 @@
     <td>You’re shipping a published document as the primary deliverable — a guide, specification, manual, or reference. No Java compile path. Uses <code>&lt;packaging&gt;pom&lt;/packaging&gt;</code> and ships the source as the <code>adoc</code> classifier.</td>
    </tr>
    <tr class="a">
-    <td style="text-align: left;"><a href="https://ike.network/example-project/">example-project</a><sup class="visible-print-inline">[4]</sup></td>
+    <td style="text-align: left;"><a href="https://ike.network/project-example/">project-example</a><sup class="visible-print-inline">[4]</sup></td>
     <td>You’re shipping a JAR (a library, a CLI, a service) AND want rendered docs alongside it.</td>
    </tr>
   </tbody>
  </table>
- <p>For the workspace-aggregator template, see <a href="https://ike.network/ike-example-ws/">ike-example-ws</a><sup class="visible-print-inline">[5]</sup>.</p>
+ <p>For the workspace-aggregator template, see <a href="https://ike.network/workspace-example/">workspace-example</a><sup class="visible-print-inline">[5]</sup>.</p>
 </div>
 <div>
  <h2 id="why-packagingpom-packaging-for-doc-only"><a href="#why-packagingpom-packaging-for-doc-only"></a><a id="why-packagingpompackaging-for-doc-only"></a>Why <code>&lt;packaging&gt;pom&lt;/packaging&gt;</code> for doc-only</h2>
@@ -333,9 +341,9 @@
 <div>
  <h2 id="release-cascade-position"><a href="#release-cascade-position"></a><a id="release-cascade-position"></a>Release Cascade Position</h2>
  <div class="source">
-  <pre class="prettyprint" copy-to-clipboard=""><code>ike-tooling -&gt; ike-docs -&gt; ike-platform -&gt; [doc-example, example-project] -&gt; ike-example-ws</code></pre>
+  <pre class="prettyprint" copy-to-clipboard=""><code>ike-tooling -&gt; ike-docs -&gt; ike-platform -&gt; { doc-example, project-example, integration-tests-example } -&gt; workspace-example</code></pre>
  </div>
- <p><code>doc-example</code> releases after <code>ike-platform</code> (whose <code>ike-parent</code> this project inherits) and after <code>ike-docs</code> (whose <code>ike-doc-maven-plugin</code> provides the <code>idoc:*</code> render goals declared at <code>49</code> in <code>ike-parent’s `&lt;pluginManagement&gt;</code>). The workspace-orchestrated release flow is <code>ws:release-publish</code> from <code>ike-example-ws</code>, which detects source-changed subprojects and releases them in topological order — see <a href="https://ike.network/ike-example-ws/">ike-example-ws</a><sup class="visible-print-inline">[5]</sup>.</p>
+ <p><code>doc-example</code> releases after <code>ike-platform</code> (whose <code>ike-parent</code> this project inherits) and after <code>ike-docs</code> (whose <code>ike-doc-maven-plugin</code> provides the <code>idoc:*</code> render goals declared at <code>49</code> in <code>ike-parent’s `&lt;pluginManagement&gt;</code>). The workspace-orchestrated release flow is <code>ws:release-publish</code> from <code>workspace-example</code>, which detects source-changed subprojects and releases them in topological order — see <a href="https://ike.network/workspace-example/">workspace-example</a><sup class="visible-print-inline">[5]</sup>.</p>
 </div>
 <div>
  <h2 id="renderer-pipelines"><a href="#renderer-pipelines"></a><a id="renderer-pipelines"></a>Renderer Pipelines</h2>
@@ -513,11 +521,15 @@ mvn site</code></pre>
    </tr>
    <tr class="a">
     <td style="text-align: left;">Sibling: code+docs template</td>
-    <td><a href="https://ike.network/example-project/" class="bare">https://ike.network/example-project/</a><sup class="visible-print-inline">[4]</sup></td>
+    <td><a href="https://ike.network/project-example/" class="bare">https://ike.network/project-example/</a><sup class="visible-print-inline">[4]</sup></td>
    </tr>
    <tr class="b">
+    <td style="text-align: left;">Sibling: integration-test harness</td>
+    <td><a href="https://ike.network/integration-tests-example/" class="bare">https://ike.network/integration-tests-example/</a><sup class="visible-print-inline">[11]</sup></td>
+   </tr>
+   <tr class="a">
     <td style="text-align: left;">Sibling: workspace-aggregator template</td>
-    <td><a href="https://ike.network/ike-example-ws/" class="bare">https://ike.network/ike-example-ws/</a><sup class="visible-print-inline">[5]</sup></td>
+    <td><a href="https://ike.network/workspace-example/" class="bare">https://ike.network/workspace-example/</a><sup class="visible-print-inline">[5]</sup></td>
    </tr>
   </tbody>
  </table>
@@ -540,16 +552,17 @@ mvn site</code></pre>
 								<li>[1] https://github.com/IKE-Network/doc-example/releases/latest</li>
 								<li>[2] https://ike.network/doc-example/</li>
 								<li>[3] https://ike.network/ike-platform/</li>
-								<li>[4] https://ike.network/example-project/</li>
-								<li>[5] https://ike.network/ike-example-ws/</li>
+								<li>[4] https://ike.network/project-example/</li>
+								<li>[5] https://ike.network/workspace-example/</li>
 								<li>[6] https://ike.network/ike-platform/ike-parent/</li>
 								<li>[7] https://ike.network/ike-docs/</li>
 								<li>[8] https://ike.network/</li>
 								<li>[9] https://github.com/IKE-Network/doc-example</li>
 								<li>[10] https://github.com/IKE-Network/ike-issues</li>
+								<li>[11] https://ike.network/integration-tests-example/</li>
 								</ul>
 							</div>
-<div class="date">Date: <strong>2026-05-20 19:54:16 -0700</strong></div>
+<div class="date">Date: <strong>2026-05-20 20:22:14 -0700</strong></div>
 						</div>
 						</div>
 					</div>
@@ -628,7 +641,7 @@ mvn site</code></pre>
 	<footer class="footer">
 
 		<p class="footer-title" ng-class="{'text-center': $matchMedia.size == 'xs'}">
-			<strong>doc-example 32</strong>
+			<strong>doc-example 33-SNAPSHOT</strong>
 			<span class="hidden-xs">|</span><br class="hidden-sm hidden-md hidden-lg"/>
 			Documentation as of <strong><time datetime="2026-05-21">2026-05-21</time></strong>
 		</p>
@@ -695,8 +708,18 @@ angular.module("sentry.site").constant("SITE_MENU", [
 	parents: [{ title: "Related Sites" }]
 },
 {
-	path: "https://ike.network/example-project/",
-	title: "example-project (sibling)",
+	path: "https://ike.network/project-example/",
+	title: "project-example (sibling)",
+	parents: [{ title: "Related Sites" }]
+},
+{
+	path: "https://ike.network/integration-tests-example/",
+	title: "integration-tests-example (sibling)",
+	parents: [{ title: "Related Sites" }]
+},
+{
+	path: "https://ike.network/workspace-example/",
+	title: "workspace-example (workspace)",
 	parents: [{ title: "Related Sites" }]
 },
 {
