@@ -68,8 +68,12 @@
                   href="https://ike.network/ike-platform/"/>
             <item name="IKE Docs (ike-doc-maven-plugin)"
                   href="https://ike.network/ike-docs/"/>
-            <item name="example-project (sibling)"
-                  href="https://ike.network/example-project/"/>
+            <item name="project-example (sibling)"
+                  href="https://ike.network/project-example/"/>
+            <item name="integration-tests-example (sibling)"
+                  href="https://ike.network/integration-tests-example/"/>
+            <item name="workspace-example (workspace)"
+                  href="https://ike.network/workspace-example/"/>
         </menu>
 
         <menu name="Reports" ref="reports"/>

@@ -214,7 +214,7 @@ The standards most directly relevant to a documentation project are
 ## Links
 
 - **Documentation:** [`https://ike.network/doc-example/`](https://ike.network/doc-example/)
-- **Workspace:** [`IKE-Network/ike-example-ws`](https://ike.network/ike-example-ws/) — clone the workspace to build doc-example alongside example-project and the integration tests
+- **Workspace:** [`IKE-Network/workspace-example`](https://ike.network/workspace-example/) — clone the workspace to build doc-example alongside project-example and integration-tests-example
 - **Build standards:** [`ike-build-standards`](https://ike.network/ike-tooling/ike-build-standards/)
 - **Issues:** [`IKE-Network/ike-issues`](https://github.com/IKE-Network/ike-issues) (cross-project tracker)
 - **Source:** [`IKE-Network/doc-example`](https://github.com/IKE-Network/doc-example)

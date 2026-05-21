@@ -97,7 +97,7 @@ get this whole pipeline for free.
 
 This project is the canonical template for an *IKE deliverable that
 is itself a published document*. The companion project
-link:https://ike.network/example-project/[example-project] is the
+link:https://ike.network/project-example/[project-example] is the
 template for a *JAR + docs* deliverable. Together they cover the two
 common shapes of IKE consumer:
 
@@ -111,13 +111,13 @@ common shapes of IKE consumer:
   Uses `<packaging>pom</packaging>` and ships the source as the
   `adoc` classifier.
 
-| link:https://ike.network/example-project/[example-project]
+| link:https://ike.network/project-example/[project-example]
 | You're shipping a JAR (a library, a CLI, a service) AND want
   rendered docs alongside it.
 |===
 
 For the workspace-aggregator template, see
-link:https://ike.network/ike-example-ws/[ike-example-ws].
+link:https://ike.network/workspace-example/[workspace-example].
 
 == Why `<packaging>pom</packaging>` for doc-only
 
@@ -149,17 +149,17 @@ page] for the full design rationale.
 
 [source]
 ----
-ike-tooling -> ike-docs -> ike-platform -> [doc-example, example-project] -> ike-example-ws
+ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-example
 ----
 
 `doc-example` releases after `ike-platform` (whose `ike-parent` this
 project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin`
 provides the `idoc:*` render goals declared at `${ike-docs.version}`
 in `ike-parent`'s `<pluginManagement>`). The workspace-orchestrated
-release flow is `ws:release-publish` from `ike-example-ws`, which
+release flow is `ws:release-publish` from `workspace-example`, which
 detects source-changed subprojects and releases them in topological
 order — see
-link:https://ike.network/ike-example-ws/[ike-example-ws].
+link:https://ike.network/workspace-example/[workspace-example].
 
 == Renderer Pipelines
 
@@ -336,8 +336,11 @@ for the foundation/examples split.
 | https://ike.network/ike-platform/
 
 | Sibling: code+docs template
-| https://ike.network/example-project/
+| https://ike.network/project-example/
+
+| Sibling: integration-test harness
+| https://ike.network/integration-tests-example/
 
 | Sibling: workspace-aggregator template
-| https://ike.network/ike-example-ws/
+| https://ike.network/workspace-example/
 |===
