@@ -55,7 +55,7 @@ JAR is already in Nexus by the time Maven loads this project.
 ### Release Cascade Position
 
 ```
-ike-tooling → ike-docs → ike-platform → { doc-example, project-example, integration-tests-example } → workspace-example
+ike-tooling → ike-docs → ike-platform → { doc-example, project-example, integration-tests-example } → workspace-reactor-example
 ```
 
 `doc-example` must release after `ike-platform`, which must release

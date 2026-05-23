@@ -72,8 +72,8 @@
                   href="https://ike.network/project-example/"/>
             <item name="integration-tests-example (sibling)"
                   href="https://ike.network/integration-tests-example/"/>
-            <item name="workspace-example (workspace)"
-                  href="https://ike.network/workspace-example/"/>
+            <item name="workspace-reactor-example (workspace)"
+                  href="https://ike.network/workspace-reactor-example/"/>
         </menu>
 
         <menu name="Reports" ref="reports"/>

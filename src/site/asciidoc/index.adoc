@@ -117,7 +117,7 @@ common shapes of IKE consumer:
 |===
 
 For the workspace-aggregator template, see
-link:https://ike.network/workspace-example/[workspace-example].
+link:https://ike.network/workspace-reactor-example/[workspace-reactor-example].
 
 == Why `<packaging>pom</packaging>` for doc-only
 
@@ -149,17 +149,17 @@ page] for the full design rationale.
 
 [source]
 ----
-ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-example
+ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-reactor-example
 ----
 
 `doc-example` releases after `ike-platform` (whose `ike-parent` this
 project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin`
 provides the `idoc:*` render goals declared at `${ike-docs.version}`
 in `ike-parent`'s `<pluginManagement>`). The workspace-orchestrated
-release flow is `ws:release-publish` from `workspace-example`, which
+release flow is `ws:release-publish` from `workspace-reactor-example`, which
 detects source-changed subprojects and releases them in topological
 order — see
-link:https://ike.network/workspace-example/[workspace-example].
+link:https://ike.network/workspace-reactor-example/[workspace-reactor-example].
 
 == Renderer Pipelines
 
@@ -342,5 +342,5 @@ for the foundation/examples split.
 | https://ike.network/integration-tests-example/
 
 | Sibling: workspace-aggregator template
-| https://ike.network/workspace-example/
+| https://ike.network/workspace-reactor-example/
 |===
