@@ -1,7 +1,7 @@
 ---
-date_published: 2026-05-20
-date_modified: 2026-05-20
-canonical_url: https://github.com/IKE-Network/doc-example/distribution-management.html
+date_published: 2026-05-26
+date_modified: 2026-05-26
+canonical_url: https://ike.network/doc-example/distribution-management.html
 ---
 
 # Overview

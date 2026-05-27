@@ -1,7 +1,7 @@
 ---
-date_published: 2026-05-20
-date_modified: 2026-05-20
-canonical_url: https://github.com/IKE-Network/doc-example/dependency-info.html
+date_published: 2026-05-26
+date_modified: 2026-05-26
+canonical_url: https://ike.network/doc-example/dependency-info.html
 ---
 
 # Maven Coordinates
@@ -12,7 +12,7 @@ canonical_url: https://github.com/IKE-Network/doc-example/dependency-info.html
 <dependency>
   <groupId>network.ike.examples</groupId>
   <artifactId>doc-example</artifactId>
-  <version>33-SNAPSHOT</version>
+  <version>33</version>
   <type>pom</type>
 </dependency>
 ```
@@ -20,7 +20,7 @@ canonical_url: https://github.com/IKE-Network/doc-example/dependency-info.html
 ## [Apache Ivy](#apache-ivy)
 
 ```
-<dependency org="network.ike.examples" name="doc-example" rev="33-SNAPSHOT">
+<dependency org="network.ike.examples" name="doc-example" rev="33">
   <artifact name="doc-example" type="pom" />
 </dependency>
 ```
@@ -29,24 +29,24 @@ canonical_url: https://github.com/IKE-Network/doc-example/dependency-info.html
 
 ```
 @Grapes(
-@Grab(group='network.ike.examples', module='doc-example', version='33-SNAPSHOT')
+@Grab(group='network.ike.examples', module='doc-example', version='33')
 )
 ```
 
 ## [Gradle/Grails](#gradle-grails)
 
 ```
-implementation 'network.ike.examples:doc-example:33-SNAPSHOT'
+implementation 'network.ike.examples:doc-example:33'
 ```
 
 ## [Scala SBT](#scala-sbt)
 
 ```
-libraryDependencies += "network.ike.examples" % "doc-example" % "33-SNAPSHOT"
+libraryDependencies += "network.ike.examples" % "doc-example" % "33"
 ```
 
 ## [Leiningen](#leiningen)
 
 ```
-[network.ike.examples/doc-example "33-SNAPSHOT"]
+[network.ike.examples/doc-example "33"]
 ```

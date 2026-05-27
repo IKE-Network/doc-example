@@ -1,7 +1,7 @@
 ---
-date_published: 2026-05-20
-date_modified: 2026-05-20
-canonical_url: https://github.com/IKE-Network/doc-example/summary.html
+date_published: 2026-05-26
+date_modified: 2026-05-26
+canonical_url: https://ike.network/doc-example/summary.html
 ---
 
 # Project Summary
@@ -12,7 +12,7 @@ canonical_url: https://github.com/IKE-Network/doc-example/summary.html
 | --- | --- |
 | Name | IKE Documentation Example |
 | Description | Documentation-only project demonstrating the IKE AsciiDoc pipeline. Exercises all diagram types, Koncept macros, typography, and layout features across all 6 PDF renderers. |
-| Homepage | [https://github.com/IKE-Network/doc-example](https://github.com/IKE-Network/doc-example)[1] |
+| Homepage | [https://ike.network/doc-example/](https://ike.network/doc-example/)[1] |
 
 ## [Project Organization](#project-organization)
 
@@ -27,5 +27,5 @@ canonical_url: https://github.com/IKE-Network/doc-example/summary.html
 | --- | --- |
 | GroupId | network.ike.examples |
 | ArtifactId | doc-example |
-| Version | 33-SNAPSHOT |
+| Version | 33 |
 | Type | pom |

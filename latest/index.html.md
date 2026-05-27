@@ -1,7 +1,7 @@
 ---
-date_published: 2026-05-20
-date_modified: 2026-05-20
-canonical_url: https://github.com/IKE-Network/doc-example/index.html
+date_published: 2026-05-26
+date_modified: 2026-05-26
+canonical_url: https://ike.network/doc-example/index.html
 ---
 
 # doc-example
@@ -55,7 +55,7 @@ This project is the canonical template for an **IKE deliverable that is itself a
 | `doc-example` | You’re shipping a published document as the primary deliverable — a guide, specification, manual, or reference. No Java compile path. Uses `<packaging>pom</packaging>` and ships the source as the `adoc` classifier. |
 | [project-example](https://ike.network/project-example/)[4] | You’re shipping a JAR (a library, a CLI, a service) AND want rendered docs alongside it. |
 
-For the workspace-aggregator template, see [workspace-example](https://ike.network/workspace-example/)[5].
+For the workspace-aggregator template, see [workspace-reactor-example](https://ike.network/workspace-reactor-example/)[5].
 
 ## [#why-packagingpom-packaging-for-doc-only](#why-packagingpom-packaging-for-doc-only)Why `<packaging>pom</packaging>` for doc-only
 
@@ -71,10 +71,10 @@ For a doc-only module like `doc-example`, `<packaging>pom</packaging>` gives exa
 ## [#release-cascade-position](#release-cascade-position)Release Cascade Position
 
 ```
-ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-example
+ike-tooling -> ike-docs -> ike-platform -> { doc-example, project-example, integration-tests-example } -> workspace-reactor-example
 ```
 
-`doc-example` releases after `ike-platform` (whose `ike-parent` this project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin` provides the `idoc:*` render goals declared at `49` in `ike-parent’s `<pluginManagement>`). The workspace-orchestrated release flow is `ws:release-publish` from `workspace-example`, which detects source-changed subprojects and releases them in topological order — see [workspace-example](https://ike.network/workspace-example/)[5].
+`doc-example` releases after `ike-platform` (whose `ike-parent` this project inherits) and after `ike-docs` (whose `ike-doc-maven-plugin` provides the `idoc:*` render goals declared at `65` in `ike-parent’s `<pluginManagement>`). The workspace-orchestrated release flow is `ws:release-publish` from `workspace-reactor-example`, which detects source-changed subprojects and releases them in topological order — see [workspace-reactor-example](https://ike.network/workspace-reactor-example/)[5].
 
 ## [#renderer-pipelines](#renderer-pipelines)Renderer Pipelines
 
@@ -177,4 +177,4 @@ When creating a new IKE document project, copy the following:
 | IKE Platform (parent POM, BOM, workspace plugin) | [https://ike.network/ike-platform/](https://ike.network/ike-platform/)[3] |
 | Sibling: code+docs template | [https://ike.network/project-example/](https://ike.network/project-example/)[4] |
 | Sibling: integration-test harness | [https://ike.network/integration-tests-example/](https://ike.network/integration-tests-example/)[11] |
-| Sibling: workspace-aggregator template | [https://ike.network/workspace-example/](https://ike.network/workspace-example/)[5] |
+| Sibling: workspace-aggregator template | [https://ike.network/workspace-reactor-example/](https://ike.network/workspace-reactor-example/)[5] |
