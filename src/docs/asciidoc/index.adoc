@@ -34,6 +34,13 @@ The IKE documentation pipeline converts AsciiDoc source to:
 
 This document tests each feature across all renderers.
 
+This project is also a member of the `workspace-reactor-example`
+working set: sibling projects consume it as an intra-workspace
+dependency, releases of the whole set are recorded in the workspace's
+`releases/` history, and a released member is pinned tag-aligned in
+`workspace.yaml` until development resumes
+(IKE-Network/ike-issues#973).
+
 == Koncept Macros
 
 [NOTE]
