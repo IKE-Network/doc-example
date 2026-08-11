@@ -1,7 +1,7 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:d496df30-e34a-3ed3-ae15-42ed6afbe510",
+  "serialNumber" : "urn:uuid:6d2723f9-2615-39de-bb73-d11f7a46e4b3",
   "version" : 1,
   "metadata" : {
     "lifecycles" : [
@@ -57,11 +57,11 @@
     },
     "component" : {
       "type" : "library",
-      "bom-ref" : "pkg:maven/network.ike.examples/doc-example@34?type=pom",
+      "bom-ref" : "pkg:maven/network.ike.examples/doc-example@35?type=pom",
       "publisher" : "IKE Network",
       "group" : "network.ike.examples",
       "name" : "doc-example",
-      "version" : "34",
+      "version" : "35",
       "description" : "Documentation-only project demonstrating the IKE AsciiDoc pipeline. Exercises all diagram types, Koncept macros, typography, and layout features across all 6 PDF renderers.",
       "licenses" : [
         {
@@ -70,7 +70,7 @@
           }
         }
       ],
-      "purl" : "pkg:maven/network.ike.examples/doc-example@34?type=pom",
+      "purl" : "pkg:maven/network.ike.examples/doc-example@35?type=pom",
       "externalReferences" : [
         {
           "type" : "website",
@@ -840,7 +840,7 @@
   ],
   "dependencies" : [
     {
-      "ref" : "pkg:maven/network.ike.examples/doc-example@34?type=pom",
+      "ref" : "pkg:maven/network.ike.examples/doc-example@35?type=pom",
       "dependsOn" : [
         "pkg:maven/network.ike.tooling/ike-build-standards@244?classifier=claude&type=zip",
         "pkg:maven/network.ike.tooling/ike-build-standards@244?classifier=config&type=zip",

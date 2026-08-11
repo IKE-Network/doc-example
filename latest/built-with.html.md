@@ -6,7 +6,7 @@ canonical_url: https://ike.network/doc-example/built-with.html
 
 # Built With
 
-Open-source software that `doc-example` 34 depends on, links against, ships within, or invokes at runtime.
+Open-source software that `doc-example` 35 depends on, links against, ships within, or invokes at runtime.
 
 Three layers of attribution ship with each release:
 
