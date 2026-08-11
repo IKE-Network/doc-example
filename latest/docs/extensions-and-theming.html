@@ -655,6 +655,26 @@ a.koncept-ref:hover svg {
     filter: brightness(0.85);
 }
 
+/* Pattern-shape tables (koncept-pattern-table:: block macro): Model Feature
+   label rows, e.g. example rows, and default rows are muted grey; example and
+   default rows indent under their feature's badge row. All are italic via
+   their cells' own e style. */
+table.koncept-pattern-table .koncept-model-feature {
+    color: #6a737d;
+}
+
+table.koncept-pattern-table .koncept-feature-example {
+    color: #6a737d;
+    display: inline-block;
+    padding-left: 1.25em;
+}
+
+table.koncept-pattern-table .koncept-feature-default {
+    color: #6a737d;
+    display: inline-block;
+    padding-left: 1.25em;
+}
+
 /* Glossary section */
 .koncept-glossary-section {
     margin-top: 2em;
@@ -744,6 +764,11 @@ p.koncept-def-missing {
     stroke-width: 1 !important;
     fill: none !important;
 }
+
+/* Doc-diff review-packet roles (ike-issues #648/#651) */
+span.diff-ins { color: #1a7f37; background-color: #e6ffec; }
+span.diff-del { color: #cf222e; background-color: #ffebe9; text-decoration: line-through; }
+span.diff-meta { color: #6e40c9; }
 </style>
 </head>
 <body class="article toc2 toc-left">
@@ -754,7 +779,7 @@ p.koncept-def-missing {
 <li><a href="#extensions-and-theming">Extensions and Theming</a>
 <ul class="sectlevel2">
 <li><a href="#directory-layout">Directory Layout</a></li>
-<li><a href="#koncept-inline-macro-kname">Koncept Inline Macro (<code><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="63" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="4" ry="4" width="63" height="22" fill="#2a5a8a"/><text x="8" y="15" fill="white" font-size="12" font-family="sans-serif" font-weight="bold">K</text><text x="26" y="15" fill="white" font-size="12" font-family="sans-serif">Name</text></svg></code>)</a></li>
+<li><a href="#koncept-inline-macro-name">Koncept Inline Macro (<code><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="45" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="6" ry="6" width="45" height="22" fill="#e9eff6"/><text x="8" y="15" fill="#2a5a8a" font-size="12" font-family="sans-serif" style="font-variant:small-caps;">Name</text></svg></code>)</a></li>
 <li><a href="#auto-generated-glossary">Auto-Generated Glossary</a></li>
 <li><a href="#shared-docinfo-html">Shared <code>docinfo.html</code></a></li>
 <li><a href="#pdf-themes">PDF Themes</a>
@@ -828,7 +853,7 @@ koncept-asciidoc-extension/src/
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
-<td><code><a href="#koncept-Name" class="koncept-ref" title="Name"><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="63" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="4" ry="4" width="63" height="22" fill="#2a5a8a"/><text x="8" y="15" fill="white" font-size="12" font-family="sans-serif" font-weight="bold">K</text><text x="26" y="15" fill="white" font-size="12" font-family="sans-serif">Name</text></svg></a></code> inline macro processor (AsciidoctorJ SPI)</td>
+<td><code><a href="#koncept-Name" class="koncept-ref" title="Name"><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="45" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="6" ry="6" width="45" height="22" fill="#e9eff6"/><text x="8" y="15" fill="#2a5a8a" font-size="12" font-family="sans-serif" style="font-variant:small-caps;">Name</text></svg></a></code> inline macro processor (AsciidoctorJ SPI)</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
@@ -854,7 +879,7 @@ koncept-asciidoc-extension/src/
 </div>
 </div>
 <div class="sect2">
-<h3 id="koncept-inline-macro-kname"><a class="anchor" href="#koncept-inline-macro-kname"></a>Koncept Inline Macro (<code><a href="#koncept-Name" class="koncept-ref" title="Name"><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="63" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="4" ry="4" width="63" height="22" fill="#2a5a8a"/><text x="8" y="15" fill="white" font-size="12" font-family="sans-serif" font-weight="bold">K</text><text x="26" y="15" fill="white" font-size="12" font-family="sans-serif">Name</text></svg></a></code>)</h3>
+<h3 id="koncept-inline-macro-name"><a class="anchor" href="#koncept-inline-macro-name"></a>Koncept Inline Macro (<code><a href="#koncept-Name" class="koncept-ref" title="Name"><svg xmlns="http://www.w3.org/2000/svg" class="koncept-badge" width="45" height="22" style="display:inline-block;vertical-align:middle;cursor:pointer;"><rect rx="6" ry="6" width="45" height="22" fill="#e9eff6"/><text x="8" y="15" fill="#2a5a8a" font-size="12" font-family="sans-serif" style="font-variant:small-caps;">Name</text></svg></a></code>)</h3>
 <div class="paragraph">
 <p>The <code>koncept-asciidoc-extension</code> module provides a
 Java/SPI-based AsciidoctorJ extension that replaces the earlier Ruby macro.
@@ -1197,7 +1222,7 @@ Last updated 2026-05-08 12:21:15 -0700
 <tr><td style="padding:2px 12px 2px 0; font-weight:bold;">Rendering pipeline</td><td style="padding:2px 0;">AsciiDoc → html5</td></tr>
 <tr><td style="padding:2px 12px 2px 0; font-weight:bold;">AsciiDoc backend</td><td style="padding:2px 0;">html5</td></tr>
 <tr><td style="padding:2px 12px 2px 0; font-weight:bold;">Document date</td><td style="padding:2px 0;">2026-05-08</td></tr>
-<tr><td style="padding:2px 12px 2px 0; font-weight:bold;">Build timestamp</td><td style="padding:2px 0;">2026-05-26T20:29:35.842428-07:00</td></tr>
+<tr><td style="padding:2px 12px 2px 0; font-weight:bold;">Build timestamp</td><td style="padding:2px 0;">2026-08-11T06:38:06.065538-07:00</td></tr>
 </table>
 </div>
 </body>
